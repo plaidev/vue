@@ -79,18 +79,21 @@ module.exports = {
     // store that check result on itself. This also allows
     // easier test coverage control by unsetting the global
     // jQuery variable in tests.
-    this.hasjQuery = typeof jQuery === 'function'
-    if (this.hasjQuery) {
-      jQuery(el).on('change', this.listener)
-      if (!lazy) {
-        jQuery(el).on('input', this.listener)
-      }
-    } else {
-      this.on('change', this.listener)
-      if (!lazy) {
-        this.on('input', this.listener)
-      }
+
+    // // always use this.on
+    // this.hasjQuery = typeof jQuery === 'function'
+    // if (this.hasjQuery) {
+    //   jQuery(el).on('change', this.listener)
+    //   if (!lazy) {
+    //     jQuery(el).on('input', this.listener)
+    //   }
+    // } else {
+
+    this.on('change', this.listener)
+    if (!lazy) {
+      this.on('input', this.listener)
     }
+    // }
 
     // IE9 doesn't fire input event on backspace/del/cut
     if (!lazy && _.isIE9) {
@@ -119,9 +122,9 @@ module.exports = {
 
   unbind: function () {
     var el = this.el
-    if (this.hasjQuery) {
-      jQuery(el).off('change', this.listener)
-      jQuery(el).off('input', this.listener)
-    }
+    // if (this.hasjQuery) {
+    //   jQuery(el).off('change', this.listener)
+    //   jQuery(el).off('input', this.listener)
+    // }
   }
 }

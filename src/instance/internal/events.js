@@ -4,7 +4,7 @@ import {
   warn
 } from '../../util/index'
 
-const eventRE = /^v-on:|^@/
+const eventRE = /^krt-on:|^@/
 
 export default function (Vue) {
   /**
@@ -23,7 +23,7 @@ export default function (Vue) {
   }
 
   /**
-   * Register v-on events on a child component
+   * Register krt-on events on a child component
    *
    * @param {Vue} vm
    * @param {Element} el
@@ -42,7 +42,7 @@ export default function (Vue) {
           vm.$on(name.replace(eventRE), handler)
         } else if (process.env.NODE_ENV !== 'production') {
           warn(
-            'v-on:' + name + '="' + attrs[i].value + '" ' +
+            'krt-on:' + name + '="' + attrs[i].value + '" ' +
             'expects a function value, got ' + handler,
             vm
           )

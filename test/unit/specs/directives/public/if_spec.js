@@ -1,7 +1,7 @@
 var Vue = require('src')
 var nextTick = Vue.nextTick
 
-describe('v-if', function () {
+describe('krt-if', function () {
   var el
   beforeEach(function () {
     el = document.createElement('div')
@@ -11,7 +11,7 @@ describe('v-if', function () {
     var vm = new Vue({
       el: el,
       data: { test: false, a: 'A' },
-      template: '<div v-if="test"><test :a="a"></test></div>',
+      template: '<div krt-if="test"><test :a="a"></test></div>',
       components: {
         test: {
           props: ['a'],
@@ -47,7 +47,7 @@ describe('v-if', function () {
     var vm = new Vue({
       el: el,
       data: { test: false, a: 'A', b: 'B' },
-      template: '<template v-if="test"><p>{{a}}</p><p>{{b}}</p></template>'
+      template: '<template krt-if="test"><p>{{a}}</p><p>{{b}}</p></template>'
     })
     // lazy instantitation
     expect(el.innerHTML).toBe('')
@@ -62,14 +62,14 @@ describe('v-if', function () {
     })
   })
 
-  it('v-if + component', function (done) {
+  it('krt-if + component', function (done) {
     var attachSpy = jasmine.createSpy()
     var detachSpy = jasmine.createSpy()
     var readySpy = jasmine.createSpy()
     var vm = new Vue({
       el: el,
       data: { ok: false },
-      template: '<test v-if="ok"></test>',
+      template: '<test krt-if="ok"></test>',
       components: {
         test: {
           data: function () {
@@ -102,14 +102,14 @@ describe('v-if', function () {
     })
   })
 
-  it('v-if + dynamic component', function (done) {
+  it('krt-if + dynamic component', function (done) {
     var vm = new Vue({
       el: el,
       data: {
         ok: false,
         view: 'view-a'
       },
-      template: '<component :is="view" v-if="ok"></component>',
+      template: '<component :is="view" krt-if="ok"></component>',
       components: {
         'view-a': {
           template: 'foo'
@@ -149,13 +149,13 @@ describe('v-if', function () {
     })
   })
 
-  it('v-if with different truthy values', function (done) {
+  it('krt-if with different truthy values', function (done) {
     var vm = new Vue({
       el: el,
       data: {
         a: 1
       },
-      template: '<div v-if="a">{{a}}</div>'
+      template: '<div krt-if="a">{{a}}</div>'
     })
     expect(el.innerHTML).toBe('<div>1</div>')
     vm.a = 2
@@ -166,7 +166,7 @@ describe('v-if', function () {
   })
 
   it('invalid warn', function () {
-    el.setAttribute('v-if', 'test')
+    el.setAttribute('krt-if', 'test')
     new Vue({
       el: el
     })
@@ -183,7 +183,7 @@ describe('v-if', function () {
       template: '<outer><transcluded></transcluded></outer>',
       components: {
         outer: {
-          template: '<div v-if="$parent.show"><slot></slot></div>'
+          template: '<div krt-if="$parent.show"><slot></slot></div>'
         },
         transcluded: {
           template: 'transcluded',
@@ -220,17 +220,17 @@ describe('v-if', function () {
       template:
         '<outer>' +
           '<div>' + // an extra layer to test components deep inside the tree
-            '<transcluded v-for="item in list" :a="item.a"></transcluded>' +
+            '<transcluded krt-for="item in list" :a="item.a"></transcluded>' +
           '</div>' +
         '</outer>',
       components: {
         outer: {
           template:
-            '<div v-if="$parent.show">' +
+            '<div krt-if="$parent.show">' +
               '<slot></slot>' +
             '</div>' +
             // this is to test that compnents that are not in the if block
-            // should not fire attach/detach when v-if toggles
+            // should not fire attach/detach when krt-if toggles
             '<transcluded></transcluded>',
           components: {
             transcluded: transcluded
@@ -290,8 +290,8 @@ describe('v-if', function () {
         showInner: false
       },
       template:
-        '<div v-if="showOuter">' +
-          '<div v-if="showInner">' +
+        '<div krt-if="showOuter">' +
+          '<div krt-if="showInner">' +
             '<test></test>' +
           '</div>' +
         '</div>',
@@ -325,7 +325,7 @@ describe('v-if', function () {
       data: {
         show: true
       },
-      template: '<template v-if="show"><test></test></template>',
+      template: '<template krt-if="show"><test></test></template>',
       components: {
         test: {
           template: 'foo',
@@ -365,7 +365,7 @@ describe('v-if', function () {
     }
   })
 
-  // #1097 v-if components not having correct parent
+  // #1097 krt-if components not having correct parent
   it('compile with correct transclusion host', function () {
     var parentA
     var parentB
@@ -374,7 +374,7 @@ describe('v-if', function () {
       data: {
         show: true
       },
-      template: '<parent><child v-if="show"></child></parent>',
+      template: '<parent><child krt-if="show"></child></parent>',
       components: {
         parent: {
           template: '<slot></slot>',
@@ -397,7 +397,7 @@ describe('v-if', function () {
     var vm = new Vue({
       el: el,
       data: { test: false, a: 'A', b: 'B' },
-      template: '<div v-if="test">{{a}}</div><div v-else>{{b}}</div>'
+      template: '<div krt-if="test">{{a}}</div><div krt-else>{{b}}</div>'
     })
     expect(el.textContent).toBe('B')
     vm.test = true
@@ -417,7 +417,7 @@ describe('v-if', function () {
     var vm = new Vue({
       el: el,
       data: { ok: false },
-      template: '<div v-if="ok"></div><div v-else><test></test></div>',
+      template: '<div krt-if="ok"></div><div krt-else><test></test></div>',
       components: {
         test: {
           created: created,

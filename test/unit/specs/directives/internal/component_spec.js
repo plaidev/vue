@@ -207,7 +207,7 @@ describe('Component', function () {
         ok: false,
         message: 'hello'
       },
-      template: '<test v-show="ok">{{message}}</test>',
+      template: '<test krt-show="ok">{{message}}</test>',
       components: {
         test: {
           template: '<div><slot></slot> {{message}}</div>',
@@ -231,14 +231,14 @@ describe('Component', function () {
     })
   })
 
-  it('parent content + v-if', function (done) {
+  it('parent content + krt-if', function (done) {
     var vm = new Vue({
       el: el,
       data: {
         ok: false,
         message: 'hello'
       },
-      template: '<test v-if="ok">{{message}}</test>',
+      template: '<test krt-if="ok">{{message}}</test>',
       components: {
         test: {
           template: '<slot></slot> {{message}}',
@@ -252,11 +252,11 @@ describe('Component', function () {
     })
     expect(el.textContent).toBe('')
     expect(vm.$children.length).toBe(0)
-    expect(vm._directives.length).toBe(1) // v-if
+    expect(vm._directives.length).toBe(1) // krt-if
     vm.ok = true
     _.nextTick(function () {
       expect(vm.$children.length).toBe(1)
-      expect(vm._directives.length).toBe(3) // v-if, component, v-text
+      expect(vm._directives.length).toBe(3) // krt-if, component, krt-text
       expect(el.textContent).toBe('hello world')
       done()
     })
@@ -271,7 +271,7 @@ describe('Component', function () {
       template: '<test :collection="list"></test>',
       components: {
         test: {
-          template: '<ul><li v-for="item in collection">{{item.a}}</li></ul>',
+          template: '<ul><li krt-for="item in collection">{{item.a}}</li></ul>',
           replace: true,
           props: ['collection']
         }

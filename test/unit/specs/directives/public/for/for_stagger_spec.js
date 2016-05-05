@@ -1,7 +1,7 @@
 var Vue = require('src')
 var _ = Vue.util
 
-describe('v-for staggering transitions', function () {
+describe('krt-for staggering transitions', function () {
   var el
   var delayAmount = 50
   var multiplier = 2.5 // the bigger the slower, but safer
@@ -17,7 +17,7 @@ describe('v-for staggering transitions', function () {
   it('as attribute', function (done) {
     var vm = new Vue({
       el: el,
-      template: '<div v-for="item in list" transition="stagger" stagger="' + delayAmount + '">{{item.a}}</div>',
+      template: '<div krt-for="item in list" transition="stagger" stagger="' + delayAmount + '">{{item.a}}</div>',
       data: {
         list: []
       },
@@ -38,7 +38,7 @@ describe('v-for staggering transitions', function () {
   it('as hook', function (done) {
     var vm = new Vue({
       el: el,
-      template: '<div v-for="item in list" transition="stagger">{{item.a}}</div>',
+      template: '<div krt-for="item in list" transition="stagger">{{item.a}}</div>',
       data: {
         list: []
       },
@@ -62,7 +62,7 @@ describe('v-for staggering transitions', function () {
   it('remove while staggered', function (done) {
     var vm = new Vue({
       el: el,
-      template: '<div v-for="item in list" transition="stagger" stagger="' + delayAmount + '">{{item.a}}</div>',
+      template: '<div krt-for="item in list" transition="stagger" stagger="' + delayAmount + '">{{item.a}}</div>',
       data: {
         list: []
       },
@@ -95,7 +95,7 @@ describe('v-for staggering transitions', function () {
   it('reorder while staggered', function (done) {
     var vm = new Vue({
       el: el,
-      template: '<div v-for="item in list" transition="stagger" stagger="' + delayAmount + '">{{item.a}}</div>',
+      template: '<div krt-for="item in list" transition="stagger" stagger="' + delayAmount + '">{{item.a}}</div>',
       data: {
         list: []
       },

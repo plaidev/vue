@@ -1,7 +1,7 @@
 var _ = require('src/util')
 var def = require('src/directives/public/text')
 
-describe('v-text', function () {
+describe('krt-text', function () {
   it('element', function () {
     var dir = {
       el: document.createElement('div')

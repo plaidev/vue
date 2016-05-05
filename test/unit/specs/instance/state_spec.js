@@ -58,7 +58,7 @@ describe('Instance state initialization', function () {
 
     it('external prop should overwrite default value', function () {
       var el = document.createElement('div')
-      el.setAttribute('v-bind:c', '2')
+      el.setAttribute('krt-bind:c', '2')
       el.textContent = '{{c}}'
       var vm = new Vue({
         el: el,

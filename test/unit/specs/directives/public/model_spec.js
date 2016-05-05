@@ -33,7 +33,7 @@ function updateSelect (el, value) {
   }
 }
 
-describe('v-model', function () {
+describe('krt-model', function () {
   var el
   beforeEach(function () {
     el = document.createElement('div')
@@ -48,8 +48,8 @@ describe('v-model', function () {
         test: '1'
       },
       template:
-        '<input type="radio" value="1" v-model="test" name="test" number>' +
-        '<input type="radio" value="2" v-model="test" name="test">'
+        '<input type="radio" value="1" krt-model="test" name="test" number>' +
+        '<input type="radio" value="2" krt-model="test" name="test">'
     })
     expect(el.childNodes[0].checked).toBe(true)
     expect(el.childNodes[1].checked).toBe(false)
@@ -72,7 +72,7 @@ describe('v-model', function () {
     var vm = new Vue({
       el: el,
       data: {},
-      template: '<input type="radio" checked value="a" v-model="test">'
+      template: '<input type="radio" checked value="a" krt-model="test">'
     })
     expect(vm.test).toBe('a')
   })
@@ -87,10 +87,10 @@ describe('v-model', function () {
         expression2: 'string2'
       },
       template:
-        '<input type="radio" value="1" v-model="test" name="test" :value="true">' +
-        '<input type="radio" value="0" v-model="test" name="test" :value="false">' +
-        '<input type="radio" value="1" v-model="test2" name="test2" :value="expression1">' +
-        '<input type="radio" value="0" v-model="test2" name="test2" :value="expression2">'
+        '<input type="radio" value="1" krt-model="test" name="test" :value="true">' +
+        '<input type="radio" value="0" krt-model="test" name="test" :value="false">' +
+        '<input type="radio" value="1" krt-model="test2" name="test2" :value="expression1">' +
+        '<input type="radio" value="0" krt-model="test2" name="test2" :value="expression2">'
     })
     expect(el.childNodes[0].checked).toBe(false)
     expect(el.childNodes[1].checked).toBe(true)
@@ -111,7 +111,7 @@ describe('v-model', function () {
       data: {
         test: true
       },
-      template: '<input type="checkbox" v-model="test">'
+      template: '<input type="checkbox" krt-model="test">'
     })
     expect(el.firstChild.checked).toBe(true)
     vm.test = false
@@ -133,7 +133,7 @@ describe('v-model', function () {
     var vm = new Vue({
       el: el,
       data: {},
-      template: '<input type="checkbox" checked v-model="test">'
+      template: '<input type="checkbox" checked krt-model="test">'
     })
     expect(vm.test).toBe(true)
   })
@@ -146,7 +146,7 @@ describe('v-model', function () {
         expression1: 'aTrueValue',
         expression2: 'aFalseValue'
       },
-      template: '<input type="checkbox" v-model="test" :true-value="expression1" :false-value="expression2">'
+      template: '<input type="checkbox" krt-model="test" :true-value="expression1" :false-value="expression2">'
     })
     expect(vm.test).toBe('')
     el.firstChild.click()
@@ -172,8 +172,8 @@ describe('v-model', function () {
         a: {}
       },
       template:
-        '<input type="checkbox" v-model="list" number value="1">' +
-        '<input type="checkbox" v-model="list" :value="a">'
+        '<input type="checkbox" krt-model="list" number value="1">' +
+        '<input type="checkbox" krt-model="list" :value="a">'
     })
     expect(el.firstChild.checked).toBe(true)
     expect(el.lastChild.checked).toBe(false)
@@ -201,8 +201,8 @@ describe('v-model', function () {
         a: {}
       },
       template:
-        '<input type="checkbox" v-model="list" number value="1">' +
-        '<input type="checkbox" checked v-model="list" :value="a">'
+        '<input type="checkbox" krt-model="list" number value="1">' +
+        '<input type="checkbox" checked krt-model="list" :value="a">'
     })
     expect(vm.list.length).toBe(1)
     expect(vm.list[0]).toBe(vm.a)
@@ -215,7 +215,7 @@ describe('v-model', function () {
         test: 'b'
       },
       template:
-        '<select v-model="test">' +
+        '<select krt-model="test">' +
           '<option>a</option>' +
           '<option>b</option>' +
           '<option>c</option>' +
@@ -243,7 +243,7 @@ describe('v-model', function () {
       },
       replace: true,
       template:
-        '<select v-model="test">' +
+        '<select krt-model="test">' +
           '<option>a</option>' +
           '<option>b</option>' +
           '<option>c</option>' +
@@ -264,7 +264,7 @@ describe('v-model', function () {
         test: 'a'
       },
       template:
-        '<select v-model="test">' +
+        '<select krt-model="test">' +
           '<option>a</option>' +
           '<option selected>b</option>' +
         '</select>'
@@ -277,7 +277,7 @@ describe('v-model', function () {
   it('select + empty default value', function () {
     var vm = new Vue({
       el: el,
-      template: '<select v-model="test"><option value="" selected>null</option><<option value="1">1</option></select>'
+      template: '<select krt-model="test"><option value="" selected>null</option><<option value="1">1</option></select>'
     })
     expect(vm.test).toBe('')
     trigger(vm.$el.firstChild, 'change')
@@ -291,7 +291,7 @@ describe('v-model', function () {
         test: [2] // test number soft equal
       },
       template:
-        '<select v-model="test" multiple>' +
+        '<select krt-model="test" multiple>' +
           '<option>1</option>' +
           '<option>2</option>' +
           '<option>3</option>' +
@@ -320,7 +320,7 @@ describe('v-model', function () {
       el: el,
       data: {},
       template:
-        '<select v-model="test" multiple>' +
+        '<select krt-model="test" multiple>' +
           '<option>a</option>' +
           '<option selected>b</option>' +
           '<option selected>c</option>' +
@@ -336,7 +336,7 @@ describe('v-model', function () {
       data: {
         test: '1'
       },
-      template: '<select v-model="test" number><option value="1">1</option></select>'
+      template: '<select krt-model="test" number><option value="1">1</option></select>'
     })
     expect(vm.test).toBe('1')
     trigger(vm.$el.firstChild, 'change')
@@ -349,7 +349,7 @@ describe('v-model', function () {
       data: {
         test: []
       },
-      template: '<select v-model="test" multiple number><option>1</option><option>2</option></select>'
+      template: '<select krt-model="test" multiple number><option>1</option><option>2</option></select>'
     })
     ;[].forEach.call(el.querySelectorAll('option'), function (o) {
       o.selected = true
@@ -365,12 +365,12 @@ describe('v-model', function () {
       data: {
         test: '1'
       },
-      template: '<select v-model="test" number><option value="1" selected>1</option></select>'
+      template: '<select krt-model="test" number><option value="1" selected>1</option></select>'
     })
     expect(vm.test).toBe(1)
   })
 
-  it('select + v-for', function (done) {
+  it('select + krt-for', function (done) {
     var vm = new Vue({
       el: el,
       data: {
@@ -381,8 +381,8 @@ describe('v-model', function () {
         ]
       },
       template:
-        '<select v-model="test">' +
-          '<option v-for="op in opts" :value="op.value">{{op.text}}</option>' +
+        '<select krt-model="test">' +
+          '<option krt-for="op in opts" :value="op.value">{{op.text}}</option>' +
         '</select>'
     })
     var select = el.firstChild
@@ -404,7 +404,7 @@ describe('v-model', function () {
         vm.opts.push({text: 'c', value: vm.test})
         _.nextTick(function () {
           // updating the opts array should force the
-          // v-model to update
+          // krt-model to update
           expect(opts[0].selected).toBe(false)
           expect(opts[1].selected).toBe(false)
           expect(opts[2].selected).toBe(true)
@@ -420,7 +420,7 @@ describe('v-model', function () {
       data: {
         test: 'b'
       },
-      template: '<input v-model="test">'
+      template: '<input krt-model="test">'
     })
     expect(el.firstChild.value).toBe('b')
     vm.test = 'a'
@@ -443,7 +443,7 @@ describe('v-model', function () {
       data: {
         test: 'b'
       },
-      template: '<input v-model="test | test" value="a">',
+      template: '<input krt-model="test | test" value="a">',
       filters: {
         test: {
           read: function (v) {
@@ -465,7 +465,7 @@ describe('v-model', function () {
       data: {
         test: 'b'
       },
-      template: '<input v-model="test" lazy>'
+      template: '<input krt-model="test" lazy>'
     })
     expect(el.firstChild.value).toBe('b')
     expect(vm.test).toBe('b')
@@ -489,7 +489,7 @@ describe('v-model', function () {
           }
         }
       },
-      template: '<input v-model="test | uppercase | test">'
+      template: '<input krt-model="test | uppercase | test">'
     })
     expect(el.firstChild.value).toBe('B')
     trigger(el.firstChild, 'focus')
@@ -521,7 +521,7 @@ describe('v-model', function () {
           }
         }
       },
-      template: '<input v-model="test | test">'
+      template: '<input krt-model="test | test">'
     })
     trigger(el.firstChild, 'focus')
     el.firstChild.value = 'cc'
@@ -545,7 +545,7 @@ describe('v-model', function () {
       data: {
         test: 1
       },
-      template: '<input v-model="test" value="2" number>'
+      template: '<input krt-model="test" value="2" number>'
     })
     expect(vm.test).toBe(2)
     el.firstChild.value = 3
@@ -561,7 +561,7 @@ describe('v-model', function () {
       data: {
         test: 'foo'
       },
-      template: '<input v-model="test">'
+      template: '<input krt-model="test">'
     })
     var input = el.firstChild
     input.value = 'bar'
@@ -593,7 +593,7 @@ describe('v-model', function () {
           test: 'foo',
           test2: 'bar'
         },
-        template: '<input v-model="test"><input v-model="test2 | uppercase">'
+        template: '<input krt-model="test"><input krt-model="test2 | uppercase">'
       })
       var input = el.firstChild
       var input2 = el.childNodes[1]
@@ -627,7 +627,7 @@ describe('v-model', function () {
         test: 'foo',
         b: 'bar'
       },
-      template: '<textarea v-model="test">foo {{b}} baz</textarea>'
+      template: '<textarea krt-model="test">foo {{b}} baz</textarea>'
     })
     expect(vm.test).toBe('foo bar baz')
     expect(el.firstChild.value).toBe('foo bar baz')
@@ -636,7 +636,7 @@ describe('v-model', function () {
   it('warn invalid tag', function () {
     new Vue({
       el: el,
-      template: '<div v-model="test"></div>'
+      template: '<div krt-model="test"></div>'
     })
     expect('does not support element type').toHaveBeenWarned()
   })
@@ -644,7 +644,7 @@ describe('v-model', function () {
   it('warn read-only filters', function () {
     new Vue({
       el: el,
-      template: '<input v-model="abc | test">',
+      template: '<input krt-model="abc | test">',
       filters: {
         test: function (v) {
           return v
@@ -662,7 +662,7 @@ describe('v-model', function () {
   //     data: {
   //       test: 'b'
   //     },
-  //     template: '<input v-model="test">'
+  //     template: '<input krt-model="test">'
   //   })
   //   expect(el.firstChild.value).toBe('b')
   //   vm.test = 'a'
@@ -691,7 +691,7 @@ describe('v-model', function () {
       watch: {
         test: spy
       },
-      template: '<input v-model="test" debounce="100">'
+      template: '<input krt-model="test" debounce="100">'
     })
     el.firstChild.value = 'b'
     trigger(el.firstChild, 'input')
@@ -730,8 +730,8 @@ describe('v-model', function () {
     var vm = new Vue({
       el: el,
       template:
-        '<input type="radio" v-model="a" checked :value="b">' +
-        '<input type="radio" v-model="a" :value="c">',
+        '<input type="radio" krt-model="a" checked :value="b">' +
+        '<input type="radio" krt-model="a" :value="c">',
       data: {
         a: 0,
         b: 1,
@@ -760,8 +760,8 @@ describe('v-model', function () {
       el: el,
       replace: false,
       template:
-        '<form v-if="ok" @submit.prevent="save">' +
-          '<input v-model="msg">' +
+        '<form krt-if="ok" @submit.prevent="save">' +
+          '<input krt-model="msg">' +
         '</form>',
       data: {
         ok: true,

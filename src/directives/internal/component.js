@@ -24,7 +24,7 @@ export default {
    * Setup. Two possible usages:
    *
    * - static:
-   *   <comp> or <div v-component="comp">
+   *   <comp> or <div krt-component="comp">
    *
    * - dynamic:
    *   <component :is="view">
@@ -49,7 +49,7 @@ export default {
       this.pendingRemovals = 0
       this.pendingRemovalCb = null
       // create a ref anchor
-      this.anchor = createAnchor('v-component')
+      this.anchor = createAnchor('krt-component')
       replace(this.el, this.anchor)
       // remove is attribute.
       // this is removed during compilation, but because compilation is
@@ -58,7 +58,7 @@ export default {
       this.el.removeAttribute('is')
       // remove ref, same as above
       if (this.descriptor.ref) {
-        this.el.removeAttribute('v-ref:' + hyphenate(this.descriptor.ref))
+        this.el.removeAttribute('krt-ref:' + hyphenate(this.descriptor.ref))
       }
       // if static, build right now.
       if (this.literal) {
@@ -212,7 +212,7 @@ export default {
         // will be the common parent vm of this instance
         // and its host.
         _context: this.vm,
-        // if this is inside an inline v-for, the scope
+        // if this is inside an inline krt-for, the scope
         // will be the intermediate scope created for this
         // repeat fragment. this is used for linking props
         // and container directives.

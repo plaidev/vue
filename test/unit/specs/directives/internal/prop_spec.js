@@ -12,7 +12,7 @@ describe('prop', function () {
       data: {
         b: 'bar'
       },
-      template: '<test v-bind:b="b" v-ref:child></test>',
+      template: '<test krt-bind:b="b" krt-ref:child></test>',
       components: {
         test: {
           props: ['b'],
@@ -69,7 +69,7 @@ describe('prop', function () {
           a: 'A'
         }
       },
-      template: '<test v-bind:testt.sync="test" :bb.sync="b" :a.sync=" test.a " v-ref:child></test>',
+      template: '<test krt-bind:testt.sync="test" :bb.sync="b" :a.sync=" test.a " krt-ref:child></test>',
       components: {
         test: {
           props: ['testt', 'bb', 'a'],
@@ -119,7 +119,7 @@ describe('prop', function () {
       data: {
         b: 'foo'
       },
-      template: '<test :b.once="b" v-ref:child></test>',
+      template: '<test :b.once="b" krt-ref:child></test>',
       components: {
         test: {
           props: ['b'],
@@ -141,7 +141,7 @@ describe('prop', function () {
       data: {
         b: 'foo'
       },
-      template: '<test :b.sync=" b + \'bar\'" v-ref:child></test>',
+      template: '<test :b.sync=" b + \'bar\'" krt-ref:child></test>',
       components: {
         test: {
           props: ['b'],
@@ -659,7 +659,7 @@ describe('prop', function () {
   it('treat boolean props properly', function () {
     var vm = new Vue({
       el: el,
-      template: '<comp v-ref:child prop-a prop-b="prop-b"></comp>',
+      template: '<comp krt-ref:child prop-a prop-b="prop-b"></comp>',
       components: {
         comp: {
           props: {
@@ -678,7 +678,7 @@ describe('prop', function () {
   it('detect possible camelCase prop usage', function () {
     new Vue({
       el: el,
-      template: '<comp propA="true" :propB="true" v-bind:propC.sync="true"></comp>',
+      template: '<comp propA="true" :propB="true" krt-bind:propC.sync="true"></comp>',
       components: {
         comp: {
           props: ['propA', 'propB', 'prop-c']
@@ -761,7 +761,7 @@ describe('prop', function () {
       components: {
         comp: {
           props: ['a'],
-          template: '<div v-for="i in a">{{ i }}</div>'
+          template: '<div krt-for="i in a">{{ i }}</div>'
         }
       }
     })
@@ -784,7 +784,7 @@ describe('prop', function () {
       components: {
         comp: {
           props: ['list'],
-          template: '<div v-for="i in list">{{ i }}</div>',
+          template: '<div krt-for="i in list">{{ i }}</div>',
           created: function () {
             this.list = [2, 3, 4]
           }
@@ -815,7 +815,7 @@ describe('prop', function () {
               }
             }
           },
-          template: '<div v-for="i in list">{{ i }}</div>'
+          template: '<div krt-for="i in list">{{ i }}</div>'
         }
       }
     })

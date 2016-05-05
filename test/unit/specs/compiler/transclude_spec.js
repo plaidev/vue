@@ -75,13 +75,13 @@ describe('Transclude', function () {
     res = transclude(el, options)
     expect(res.nodeType).toBe(11)
 
-    // v-for
-    options.template = '<div v-for="item in list"></div>'
+    // krt-for
+    options.template = '<div krt-for="item in list"></div>'
     res = transclude(el, options)
     expect(res.nodeType).toBe(11)
 
-    // v-if
-    options.template = '<div v-if="ok"></div>'
+    // krt-if
+    options.template = '<div krt-if="ok"></div>'
     res = transclude(el, options)
     expect(res.nodeType).toBe(11)
   })

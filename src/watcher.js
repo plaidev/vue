@@ -133,14 +133,14 @@ Watcher.prototype.set = function (value) {
       )
     }
   }
-  // two-way sync for v-for alias
+  // two-way sync for krt-for alias
   var forContext = scope.$forContext
   if (forContext && forContext.alias === this.expression) {
     if (forContext.filters) {
       process.env.NODE_ENV !== 'production' && warn(
         'It seems you are using two-way binding on ' +
-        'a v-for alias (' + this.expression + '), and the ' +
-        'v-for has filters. This will not work properly. ' +
+        'a krt-for alias (' + this.expression + '), and the ' +
+        'krt-for has filters. This will not work properly. ' +
         'Either remove the filters or use an array of ' +
         'objects and bind to object properties instead.',
         this.vm
@@ -309,8 +309,8 @@ Watcher.prototype.teardown = function () {
   if (this.active) {
     // remove self from vm's watcher list
     // this is a somewhat expensive operation so we skip it
-    // if the vm is being destroyed or is performing a v-for
-    // re-render (the watcher list is then filtered by v-for).
+    // if the vm is being destroyed or is performing a krt-for
+    // re-render (the watcher list is then filtered by krt-for).
     if (!this.vm._isBeingDestroyed && !this.vm._vForRemoving) {
       this.vm._watchers.$remove(this)
     }

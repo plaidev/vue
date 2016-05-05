@@ -84,7 +84,7 @@ export default {
   },
 
   update (handler) {
-    // stub a noop for v-on with no value,
+    // stub a noop for krt-on with no value,
     // e.g. @mousedown.prevent
     if (!this.descriptor.raw) {
       handler = function () {}
@@ -92,7 +92,7 @@ export default {
 
     if (typeof handler !== 'function') {
       process.env.NODE_ENV !== 'production' && warn(
-        'v-on:' + this.arg + '="' +
+        'krt-on:' + this.arg + '="' +
         this.expression + '" expects a function value, ' +
         'got ' + handler,
         this.vm

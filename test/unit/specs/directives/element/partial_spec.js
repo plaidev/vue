@@ -47,10 +47,10 @@ describe('Partial', function () {
     })
   })
 
-  it('dynamic inside v-for', function () {
+  it('dynamic inside krt-for', function () {
     new Vue({
       el: el,
-      template: '<div v-for="id in list"><partial v-bind:name="\'test-\' + id"></partial></div>',
+      template: '<div krt-for="id in list"><partial krt-bind:name="\'test-\' + id"></partial></div>',
       data: {
         list: ['foo', 'bar']
       },

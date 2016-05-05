@@ -6,7 +6,7 @@ describe('Misc', function () {
   it('should handle directive.bind() altering its childNode structure', function () {
     var vm = new Vue({
       el: document.createElement('div'),
-      template: '<div v-test>{{test}}</div>',
+      template: '<div krt-test>{{test}}</div>',
       data: {
         test: 'foo'
       },
@@ -26,7 +26,7 @@ describe('Misc', function () {
     var spy1 = jasmine.createSpy('attached')
     var spy2 = jasmine.createSpy('detached')
     var el = document.createElement('div')
-    el.innerHTML = '<outer v-ref:outter><inner></inner></outer>'
+    el.innerHTML = '<outer krt-ref:outter><inner></inner></outer>'
     document.body.appendChild(el)
 
     var vm = new Vue({
@@ -47,7 +47,7 @@ describe('Misc', function () {
     expect(spy2).toHaveBeenCalled()
   })
 
-  it('v-for on component root node with replace:true', function () {
+  it('krt-for on component root node with replace:true', function () {
     var el = document.createElement('div')
     var vm = new Vue({
       el: el,
@@ -57,7 +57,7 @@ describe('Misc', function () {
           data: function () {
             return { list: [1, 2, 3] }
           },
-          template: '<div v-for="n in list">{{n}}</div>',
+          template: '<div krt-for="n in list">{{n}}</div>',
           replace: true
         }
       }
@@ -66,11 +66,11 @@ describe('Misc', function () {
   })
 
   // #922
-  it('template v-for inside svg', function () {
+  it('template krt-for inside svg', function () {
     var el = document.createElement('div')
     new Vue({
       el: el,
-      template: '<svg><template v-for="n in list"><text>{{n}}</text></template></svg>',
+      template: '<svg><template krt-for="n in list"><text>{{n}}</text></template></svg>',
       data: {
         list: [1, 2, 3]
       }
@@ -168,11 +168,11 @@ describe('Misc', function () {
   })
 
   // #1006
-  it('destroyed hook for components inside v-if', function (done) {
-    var spy = jasmine.createSpy('v-if destroyed hook')
+  it('destroyed hook for components inside krt-if', function (done) {
+    var spy = jasmine.createSpy('krt-if destroyed hook')
     var vm = new Vue({
       el: document.createElement('div'),
-      template: '<template v-if="ok"><test></test></template>',
+      template: '<template krt-if="ok"><test></test></template>',
       data: {
         ok: true
       },
@@ -339,8 +339,8 @@ describe('Misc', function () {
       el: el,
       template:
         '<div>' +
-          '<comp v-bind:title="title"></comp>' +
-          '<comp title="static" v-bind:title="title"></comp>' +
+          '<comp krt-bind:title="title"></comp>' +
+          '<comp title="static" krt-bind:title="title"></comp>' +
           '<comp title="static"></comp>' +
           '<comp :title="title"></comp>' +
           '<comp title="static" :title="title"></comp>' +
@@ -363,7 +363,7 @@ describe('Misc', function () {
     var el = document.createElement('div')
     var vm = new Vue({
       el: el,
-      template: '<div :class="classes" :style="styles" v-bind="attrs"></div>',
+      template: '<div :class="classes" :style="styles" krt-bind="attrs"></div>',
       data: {
         classes: { a: true, b: false },
         styles: { color: 'red', fontSize: '14px' },
@@ -448,7 +448,7 @@ describe('Misc', function () {
   })
 
   // #2163
-  it('slot compilation order with v-if', function () {
+  it('slot compilation order with krt-if', function () {
     var vm = new Vue({
       el: document.createElement('div'),
       template:
@@ -460,7 +460,7 @@ describe('Misc', function () {
         test: {
           template:
             '<div>' +
-              '<slot v-if="true"></slot> ' +
+              '<slot krt-if="true"></slot> ' +
               '<slot name="one"></slot>' +
             '</div>',
           replace: true
@@ -495,7 +495,7 @@ describe('Misc', function () {
 
     new Vue({
       el: el,
-      template: '<comp v-for="n in 1"></comp>',
+      template: '<comp krt-for="n in 1"></comp>',
       components: {
         comp: {
           template: '<div><child></child></div>',

@@ -15,7 +15,7 @@ import {
 
 export default function (Vue) {
   /**
-   * Update v-ref for component.
+   * Update krt-ref for component.
    *
    * @param {Boolean} remove
    */
@@ -58,8 +58,8 @@ export default function (Vue) {
     el = transclude(el, options)
     this._initElement(el)
 
-    // handle v-pre on root node (#2026)
-    if (el.nodeType === 1 && getAttr(el, 'v-pre') !== null) {
+    // handle krt-pre on root node (#2026)
+    if (el.nodeType === 1 && getAttr(el, 'krt-pre') !== null) {
       return
     }
 
@@ -138,7 +138,7 @@ export default function (Vue) {
    * @param {Object} descriptor - parsed directive descriptor
    * @param {Node} node   - target node
    * @param {Vue} [host] - transclusion host component
-   * @param {Object} [scope] - v-for scope
+   * @param {Object} [scope] - krt-for scope
    * @param {Fragment} [frag] - owner fragment
    */
 

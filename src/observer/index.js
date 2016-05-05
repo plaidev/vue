@@ -13,7 +13,7 @@ const arrayKeys = Object.getOwnPropertyNames(arrayMethods)
 /**
  * By default, when a reactive property is set, the new value is
  * also converted to become reactive. However in certain cases, e.g.
- * v-for scope alias and props, we don't want to force conversion
+ * krt-for scope alias and props, we don't want to force conversion
  * because the value may be a nested value under a frozen data structure.
  *
  * So whenever we want to set a reactive property without forcing

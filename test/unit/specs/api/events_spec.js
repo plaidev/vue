@@ -153,10 +153,10 @@ describe('Events API', function () {
     expect(spy.calls.count()).toBe(2)
   })
 
-  it('handle $dispatch by v-on inline-statement', function () {
+  it('handle $dispatch by krt-on inline-statement', function () {
     var parent = new Vue({
       el: document.createElement('div'),
-      template: '<child1 @test="onTest()" v-ref:child></child1>',
+      template: '<child1 @test="onTest()" krt-ref:child></child1>',
       methods: {
         onTest: function () {
           spy()
@@ -164,7 +164,7 @@ describe('Events API', function () {
       },
       components: {
         child1: {
-          template: '<child2 @test="onTest" v-ref:child></child2>',
+          template: '<child2 @test="onTest" krt-ref:child></child2>',
           methods: {
             onTest: function () {
               spy()
@@ -172,7 +172,7 @@ describe('Events API', function () {
           },
           components: {
             child2: {
-              template: '<child3 @test="onTest()" v-ref:child></child3>',
+              template: '<child3 @test="onTest()" krt-ref:child></child3>',
               methods: {
                 onTest: function () {
                   spy()
@@ -181,7 +181,7 @@ describe('Events API', function () {
               },
               components: {
                 child3: {
-                  template: '<child4 @test="onTest" v-ref:child></child4>',
+                  template: '<child4 @test="onTest" krt-ref:child></child4>',
                   methods: {
                     onTest: function () {
                       spy()
@@ -211,7 +211,7 @@ describe('Events API', function () {
     var shouldPropagate = true
     var parent = new Vue({
       el: document.createElement('div'),
-      template: '<child @test="onTest" v-ref:child></child>',
+      template: '<child @test="onTest" krt-ref:child></child>',
       events: {
         test: spy
       },

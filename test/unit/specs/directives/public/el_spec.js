@@ -13,7 +13,7 @@ describe('el', function () {
       data: {
         ok: true
       },
-      template: '<div v-if="ok" v-el:test-el id="test"></div>'
+      template: '<div krt-if="ok" krt-el:test-el id="test"></div>'
     })
     expect(vm.$els.testEl).toBeTruthy()
     expect(vm.$els.testEl.id).toBe('test')
@@ -28,11 +28,11 @@ describe('el', function () {
     })
   })
 
-  it('inside v-for', function () {
+  it('inside krt-for', function () {
     var vm = new Vue({
       el: el,
       data: { items: [1, 2] },
-      template: '<div v-for="n in items"><p v-el:test>{{n}}</p>{{$els.test.textContent}}</div>'
+      template: '<div krt-for="n in items"><p krt-el:test>{{n}}</p>{{$els.test.textContent}}</div>'
     })
     expect(vm.$el.textContent).toBe('1122')
   })

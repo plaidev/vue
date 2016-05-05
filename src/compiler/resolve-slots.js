@@ -56,8 +56,8 @@ function extractFragment (nodes, parent) {
     var node = nodes[i]
     if (
       isTemplate(node) &&
-      !node.hasAttribute('v-if') &&
-      !node.hasAttribute('v-for')
+      !node.hasAttribute('krt-if') &&
+      !node.hasAttribute('krt-for')
     ) {
       parent.removeChild(node)
       node = parseTemplate(node)

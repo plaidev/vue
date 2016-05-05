@@ -50,8 +50,8 @@ describe('Compile', function () {
   })
 
   it('normal directives', function () {
-    el.setAttribute('v-a', 'b')
-    el.innerHTML = '<p v-a:hello.a.b="a" v-b="1">hello</p><div v-b.literal="foo"></div>'
+    el.setAttribute('krt-a', 'b')
+    el.innerHTML = '<p krt-a:hello.a.b="a" krt-b="1">hello</p><div krt-b.literal="foo"></div>'
     var defA = { priority: 1 }
     var defB = { priority: 2 }
     var options = _.mergeOptions(Vue.options, {
@@ -68,7 +68,7 @@ describe('Compile', function () {
 
     // check if we are in firefox, which has different
     // attribute interation order
-    var isAttrReversed = el.firstChild.attributes[0].name === 'v-b'
+    var isAttrReversed = el.firstChild.attributes[0].name === 'krt-b'
 
     // 1
     var args = vm._bindDir.calls.argsFor(0)
@@ -107,7 +107,7 @@ describe('Compile', function () {
     expect(directiveBind.calls.argsFor(3)[0]).toBe('a')
   })
 
-  it('v-bind shorthand', function () {
+  it('krt-bind shorthand', function () {
     el.setAttribute(':class', 'a')
     el.setAttribute(':style', 'b')
     el.setAttribute(':title', 'c')
@@ -153,7 +153,7 @@ describe('Compile', function () {
     })
   })
 
-  it('v-on shorthand', function () {
+  it('krt-on shorthand', function () {
     el.innerHTML = '<div @click="a++"></div>'
     el = el.firstChild
     var linker = compile(el, Vue.options)
@@ -230,13 +230,13 @@ describe('Compile', function () {
     expect(htmlArgs[0].expression).toBe('html')
     expect(htmlArgs[0].def).toBe(htmlDef)
     // with placeholder comments & interpolated one-time html
-    expect(el.innerHTML).toBe('<!--v-html--> <div>foo</div>')
+    expect(el.innerHTML).toBe('<!--krt-html--> <div>foo</div>')
   })
 
   it('terminal directives', function () {
     el.innerHTML =
-      '<div v-for="item in items"><p v-a="b"></p></div>' + // v-for
-      '<div v-pre><p v-a="b"></p></div>' // v-pre
+      '<div krt-for="item in items"><p krt-a="b"></p></div>' + // krt-for
+      '<div krt-pre><p krt-a="b"></p></div>' // krt-pre
     var def = Vue.options.directives.for
     var linker = compile(el, Vue.options)
     linker(vm, el)
@@ -258,14 +258,14 @@ describe('Compile', function () {
     var options = _.mergeOptions(Vue.options, {
       directives: { term: defTerminal }
     })
-    el.innerHTML = '<div v-term:arg1.modifier1.modifier2="foo"></div>'
+    el.innerHTML = '<div krt-term:arg1.modifier1.modifier2="foo"></div>'
     var linker = compile(el, options)
     linker(vm, el)
     expect(vm._bindDir.calls.count()).toBe(1)
     var args = vm._bindDir.calls.argsFor(0)
     expect(args[0].name).toBe('term')
     expect(args[0].expression).toBe('foo')
-    expect(args[0].attr).toBe('v-term:arg1.modifier1.modifier2')
+    expect(args[0].attr).toBe('krt-term:arg1.modifier1.modifier2')
     expect(args[0].arg).toBe('arg1')
     expect(args[0].modifiers.modifier1).toBe(true)
     expect(args[0].modifiers.modifier2).toBe(true)
@@ -280,14 +280,14 @@ describe('Compile', function () {
     var options = _.mergeOptions(Vue.options, {
       directives: { term: defTerminal }
     })
-    el.innerHTML = '<div v-term:arg1 v-if="ok"></div>'
+    el.innerHTML = '<div krt-term:arg1 krt-if="ok"></div>'
     var linker = compile(el, options)
     linker(vm, el)
     expect(vm._bindDir.calls.count()).toBe(1)
     var args = vm._bindDir.calls.argsFor(0)
     expect(args[0].name).toBe('term')
     expect(args[0].expression).toBe('')
-    expect(args[0].attr).toBe('v-term:arg1')
+    expect(args[0].attr).toBe('krt-term:arg1')
     expect(args[0].arg).toBe('arg1')
     expect(args[0].def).toBe(defTerminal)
   })
@@ -298,7 +298,7 @@ describe('Compile', function () {
         'my-component': {}
       }
     })
-    el.innerHTML = '<my-component><div v-a="b"></div></my-component>'
+    el.innerHTML = '<my-component><div krt-a="b"></div></my-component>'
     var linker = compile(el, options)
     linker(vm, el)
     expect(vm._bindDir.calls.count()).toBe(1)
@@ -325,7 +325,7 @@ describe('Compile', function () {
       literalWithFilter: null
     }
     el.innerHTML = '<div ' +
-      'v-bind:test-normal="a" ' +
+      'krt-bind:test-normal="a" ' +
       'test-literal="1" ' +
       'test-boolean ' +
       ':optimize-literal="1" ' +
@@ -378,7 +378,7 @@ describe('Compile', function () {
     // temporarily remove vm.$parent
     var context = vm._context
     vm._context = null
-    el.setAttribute('v-bind:a', '"foo"')
+    el.setAttribute('krt-bind:a', '"foo"')
     el.setAttribute(':b', '[1,2,3]')
     compiler.compileAndLinkProps(vm, el, { a: null, b: null })
     expect(vm._bindDir.calls.count()).toBe(0)
@@ -404,7 +404,7 @@ describe('Compile', function () {
   })
 
   it('partial compilation', function () {
-    el.innerHTML = '<div v-bind:test="abc">{{bcd}}<p v-show="ok"></p></div>'
+    el.innerHTML = '<div krt-bind:test="abc">{{bcd}}<p krt-show="ok"></p></div>'
     var linker = compile(el, Vue.options, true)
     var decompile = linker(vm, el)
     expect(vm._directives.length).toBe(3)
@@ -426,13 +426,13 @@ describe('Compile', function () {
     vm = new Vue({
       el: el,
       template:
-        '<test class="a" v-on:click="test(1)"></test>',
+        '<test class="a" krt-on:click="test(1)"></test>',
       methods: {
         test: parentSpy
       },
       components: {
         test: {
-          template: '<div class="b" v-on:click="test(2)"></div>',
+          template: '<div class="b" krt-on:click="test(2)"></div>',
           replace: true,
           methods: {
             test: childSpy
@@ -458,7 +458,7 @@ describe('Compile', function () {
       components: {
         test: {
           props: ['msg'],
-          template: '<div v-show="true"></div>',
+          template: '<div krt-show="true"></div>',
           replace: true
         }
       }
@@ -476,7 +476,7 @@ describe('Compile', function () {
     var vm = new Vue({
       el: el,
       template:
-        '<test v-show="ok"></test>',
+        '<test krt-show="ok"></test>',
       data: {
         ok: true
       },
@@ -516,11 +516,11 @@ describe('Compile', function () {
     expect(vm.$children.length).toBe(0)
   })
 
-  it('should remove transcluded directives from parent when unlinking (v-if + component)', function (done) {
+  it('should remove transcluded directives from parent when unlinking (krt-if + component)', function (done) {
     var vm = new Vue({
       el: el,
       template:
-        '<div v-if="ok">' +
+        '<div krt-if="ok">' +
           '<test>{{test}}</test>' +
         '</div>',
       data: {
@@ -615,7 +615,7 @@ describe('Compile', function () {
   it('attribute interpolation: warn invalid', function () {
     new Vue({
       el: el,
-      template: '<div v-text="{{a}}"></div>',
+      template: '<div krt-text="{{a}}"></div>',
       data: {
         a: '123'
       }
@@ -624,7 +624,7 @@ describe('Compile', function () {
     expect('attribute interpolation is not allowed in Vue.js directives').toHaveBeenWarned()
   })
 
-  it('attribute interpolation: warn mixed usage with v-bind', function () {
+  it('attribute interpolation: warn mixed usage with krt-bind', function () {
     new Vue({
       el: el,
       template: '<div class="{{a}}" :class="bcd"></div>',
@@ -632,7 +632,7 @@ describe('Compile', function () {
         a: 'foo'
       }
     })
-    expect('Do not mix mustache interpolation and v-bind').toHaveBeenWarned()
+    expect('Do not mix mustache interpolation and krt-bind').toHaveBeenWarned()
   })
 
   it('warn directives on fragment instances', function () {
@@ -664,7 +664,7 @@ describe('Compile', function () {
           }
         }
       },
-      template: '<comp v-test></comp>',
+      template: '<comp krt-test></comp>',
       components: { comp: { template: '<div></div>' }}
     })
     expect(el.textContent).toBe('worked!')
@@ -676,7 +676,7 @@ describe('Compile', function () {
     var vm = new Vue({
       el: el,
       data: { show: false },
-      template: '<p v-if:arg1.modifier1="show">hello world</p>'
+      template: '<p krt-if:arg1.modifier1="show">hello world</p>'
     })
     vm.show = true
     _.nextTick(function () {
@@ -689,13 +689,13 @@ describe('Compile', function () {
     var vm = new Vue({
       el: el,
       data: { show: false },
-      template: '<p v-if="show" v-inject:modal.modifier1="foo">hello world</p>',
+      template: '<p krt-if="show" krt-inject:modal.modifier1="foo">hello world</p>',
       directives: {
         inject: {
           terminal: true,
           priority: Vue.options.directives.if.priority + 1,
           bind: function () {
-            this.anchor = _.createAnchor('v-inject')
+            this.anchor = _.createAnchor('krt-inject')
             _.replace(this.el, this.anchor)
             var factory = new FragmentFactory(this.vm, this.el)
             this.frag = factory.create(this._host, this._scope, this._frag)

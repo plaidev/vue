@@ -163,7 +163,7 @@ describe('Slot Distribution', function () {
     })
   })
 
-  it('v-if with content transclusion', function (done) {
+  it('krt-if with content transclusion', function (done) {
     var vm = new Vue({
       el: el,
       data: {
@@ -175,7 +175,7 @@ describe('Slot Distribution', function () {
       components: {
         test: {
           props: ['show'],
-          template: '<div v-if="show"><slot></slot><slot name="b"></slot></div>'
+          template: '<div krt-if="show"><slot></slot><slot name="b"></slot></div>'
         }
       }
     })
@@ -196,11 +196,11 @@ describe('Slot Distribution', function () {
     })
   })
 
-  it('inline v-for', function () {
+  it('inline krt-for', function () {
     el.innerHTML = '<p slot="1">1</p><p slot="2">2</p><p slot="3">3</p>'
     new Vue({
       el: el,
-      template: '<div v-for="n in list"><slot :name="$index + 1"></slot></div>',
+      template: '<div krt-for="n in list"><slot :name="$index + 1"></slot></div>',
       data: {
         list: 0
       },
@@ -211,10 +211,10 @@ describe('Slot Distribution', function () {
     expect(el.innerHTML).toBe('<div><p slot="1">1</p></div><div><p slot="2">2</p></div><div><p slot="3">3</p></div>')
   })
 
-  it('v-for + component + parent directive + transclusion', function (done) {
+  it('krt-for + component + parent directive + transclusion', function (done) {
     var vm = new Vue({
       el: el,
-      template: '<test v-for="n in list" :class="cls" :a="n.a">{{msg}}</test>',
+      template: '<test krt-for="n in list" :class="cls" :a="n.a">{{msg}}</test>',
       data: {
         cls: 'parent',
         msg: 'foo',
@@ -248,7 +248,7 @@ describe('Slot Distribution', function () {
       template:
         '<testa>' +
           '<testb>' +
-            '<div v-for="n in list">{{n}}</div>' +
+            '<div krt-for="n in list">{{n}}</div>' +
           '</testb>' +
         '</testa>',
       data: {
@@ -280,7 +280,7 @@ describe('Slot Distribution', function () {
       el: el,
       template:
         '<testa>' +
-          '<testb v-if="ok" :msg="msg"></testb>' +
+          '<testb krt-if="ok" :msg="msg"></testb>' +
         '</testa>',
       data: {
         ok: false,
@@ -303,13 +303,13 @@ describe('Slot Distribution', function () {
   })
 
   // #1010
-  it('v-for inside transcluded content', function () {
+  it('krt-for inside transcluded content', function () {
     vm = new Vue({
       el: el,
       template:
         '<testa>' +
           '{{inner}} {{outer}}' +
-          '<div v-for="item in list"> {{item.inner}} {{outer}}</div>' +
+          '<div krt-for="item in list"> {{item.inner}} {{outer}}</div>' +
         '</testa>',
       data: {
         outer: 'outer',
@@ -362,10 +362,10 @@ describe('Slot Distribution', function () {
     expect(el.innerHTML).toBe('hello world')
   })
 
-  it('inside v-for', function () {
+  it('inside krt-for', function () {
     new Vue({
       el: el,
-      template: '<comp v-for="item in items">{{item.value}}</comp>',
+      template: '<comp krt-for="item in items">{{item.value}}</comp>',
       data: {
         items: [{value: 123}, {value: 234}]
       },
@@ -378,10 +378,10 @@ describe('Slot Distribution', function () {
     expect(el.textContent).toBe('123234')
   })
 
-  it('fallback inside v-for', function () {
+  it('fallback inside krt-for', function () {
     new Vue({
       el: el,
-      template: '<div v-for="n in 3"><comp></comp></div>',
+      template: '<div krt-for="n in 3"><comp></comp></div>',
       components: {
         comp: {
           template: '<div><slot>{{foo}}</slot></div>',
@@ -396,14 +396,14 @@ describe('Slot Distribution', function () {
     expect(el.textContent).toBe('barbarbar')
   })
 
-  it('fallback for slot with v-if', function (done) {
+  it('fallback for slot with krt-if', function (done) {
     var vm = new Vue({
       el: el,
       data: {
         ok: false,
         msg: 'inserted'
       },
-      template: '<div><comp><div v-if="ok">{{ msg }}</div></comp></div>',
+      template: '<div><comp><div krt-if="ok">{{ msg }}</div></comp></div>',
       components: {
         comp: {
           data: function () {
@@ -433,8 +433,8 @@ describe('Slot Distribution', function () {
           },
           template:
             '<div>' +
-              '<template v-if="ok">' +
-                '<template v-if="ok">' +
+              '<template krt-if="ok">' +
+                '<template krt-if="ok">' +
                   '<slot>{{ msg }}</slot>' +
                 '</template>' +
               '</template>' +

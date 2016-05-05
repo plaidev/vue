@@ -6,7 +6,7 @@ export default {
   bind () {
     // check else block
     var next = this.el.nextElementSibling
-    if (next && getAttr(next, 'v-else') !== null) {
+    if (next && getAttr(next, 'krt-else') !== null) {
       this.elseEl = next
     }
   },

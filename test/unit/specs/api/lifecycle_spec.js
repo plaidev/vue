@@ -240,7 +240,7 @@ describe('Lifecycle API', function () {
       var spy = jasmine.createSpy('directive unbind')
       var vm = new Vue({
         el: document.createElement('div'),
-        template: '<div v-test></div>',
+        template: '<div krt-test></div>',
         directives: {
           test: {
             unbind: spy

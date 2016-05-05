@@ -60,7 +60,7 @@ export function getAttr (node, _attr) {
 }
 
 /**
- * Get an attribute with colon or v-bind: prefix.
+ * Get an attribute with colon or krt-bind: prefix.
  *
  * @param {Node} node
  * @param {String} name
@@ -70,7 +70,7 @@ export function getAttr (node, _attr) {
 export function getBindAttr (node, name) {
   var val = getAttr(node, ':' + name)
   if (val === null) {
-    val = getAttr(node, 'v-bind:' + name)
+    val = getAttr(node, 'krt-bind:' + name)
   }
   return val
 }
@@ -86,7 +86,7 @@ export function getBindAttr (node, name) {
 export function hasBindAttr (node, name) {
   return node.hasAttribute(name) ||
     node.hasAttribute(':' + name) ||
-    node.hasAttribute('v-bind:' + name)
+    node.hasAttribute('krt-bind:' + name)
 }
 
 /**
@@ -328,9 +328,9 @@ export function isTemplate (el) {
  * Create an "anchor" for performing dom insertion/removals.
  * This is used in a number of scenarios:
  * - fragment instance
- * - v-html
- * - v-if
- * - v-for
+ * - krt-html
+ * - krt-if
+ * - krt-for
  * - component
  *
  * @param {String} content
@@ -357,7 +357,7 @@ export function createAnchor (content, persist) {
  * @return {String|undefined}
  */
 
-var refRE = /^v-ref:/
+var refRE = /^krt-ref:/
 export function findRef (node) {
   if (node.hasAttributes()) {
     var attrs = node.attributes

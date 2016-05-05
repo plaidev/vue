@@ -9,7 +9,7 @@ function trigger (target, event, process) {
   return e
 }
 
-describe('v-on', function () {
+describe('krt-on', function () {
   var el
   beforeEach(function () {
     el = document.createElement('div')
@@ -19,7 +19,7 @@ describe('v-on', function () {
     var spy = jasmine.createSpy()
     var vm = new Vue({
       el: el,
-      template: '<a v-on:click="test"></a>',
+      template: '<a krt-on:click="test"></a>',
       data: {a: 1},
       methods: {
         test: spy
@@ -54,7 +54,7 @@ describe('v-on', function () {
   it('inline expression', function (done) {
     new Vue({
       el: el,
-      template: '<a v-on:click="a++">{{a}}</a>',
+      template: '<a krt-on:click="a++">{{a}}</a>',
       data: {a: 1}
     })
     var a = el.firstChild
@@ -68,7 +68,7 @@ describe('v-on', function () {
   it('with key modifier', function (done) {
     new Vue({
       el: el,
-      template: '<a v-on:keyup.enter="test">{{a}}</a>',
+      template: '<a krt-on:keyup.enter="test">{{a}}</a>',
       data: {a: 1},
       methods: {
         test: function () {
@@ -89,7 +89,7 @@ describe('v-on', function () {
   it('with delete modifier capturing DEL', function (done) {
     new Vue({
       el: el,
-      template: '<a v-on:keyup.delete="test">{{a}}</a>',
+      template: '<a krt-on:keyup.delete="test">{{a}}</a>',
       data: {a: 1},
       methods: {
         test: function () {
@@ -110,7 +110,7 @@ describe('v-on', function () {
   it('with delete modifier capturing backspace', function (done) {
     new Vue({
       el: el,
-      template: '<a v-on:keyup.delete="test">{{a}}</a>',
+      template: '<a krt-on:keyup.delete="test">{{a}}</a>',
       data: {a: 1},
       methods: {
         test: function () {
@@ -131,7 +131,7 @@ describe('v-on', function () {
   it('with key modifier (keycode)', function (done) {
     new Vue({
       el: el,
-      template: '<a v-on:keyup.13="test">{{a}}</a>',
+      template: '<a krt-on:keyup.13="test">{{a}}</a>',
       data: {a: 1},
       methods: {
         test: function () {
@@ -152,7 +152,7 @@ describe('v-on', function () {
   it('with key modifier (letter)', function (done) {
     new Vue({
       el: el,
-      template: '<a v-on:keyup.a="test">{{a}}</a>',
+      template: '<a krt-on:keyup.a="test">{{a}}</a>',
       data: {a: 1},
       methods: {
         test: function () {
@@ -271,7 +271,7 @@ describe('v-on', function () {
     new Vue({
       el: el,
       data: { test: 123 },
-      template: '<a v-on:keyup="test"></a>'
+      template: '<a krt-on:keyup="test"></a>'
     })
     expect('expects a function value').toHaveBeenWarned()
   })
@@ -283,7 +283,7 @@ describe('v-on', function () {
     var spy = jasmine.createSpy()
     var vm = new Vue({
       el: el,
-      template: '<iframe v-on:click="test"></iframe>',
+      template: '<iframe krt-on:click="test"></iframe>',
       methods: {
         test: spy
       }
@@ -301,7 +301,7 @@ describe('v-on', function () {
     var test = jasmine.createSpy()
     new Vue({
       el: el,
-      template: '<a v-on:click="test($event)"></a>',
+      template: '<a krt-on:click="test($event)"></a>',
       methods: {
         test: test
       }
@@ -319,7 +319,7 @@ describe('v-on', function () {
     })
     var child = new Vue({
       el: el,
-      template: '<a v-on:click="$parent.test($event)"></a>',
+      template: '<a krt-on:click="$parent.test($event)"></a>',
       parent: parent
     })
     var e = trigger(child.$el.firstChild, 'click')

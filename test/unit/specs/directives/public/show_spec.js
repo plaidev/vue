@@ -2,7 +2,7 @@ var Vue = require('src')
 var transition = require('src/transition')
 var def = require('src/directives/public/show')
 
-describe('v-show', function () {
+describe('krt-show', function () {
   var el
   beforeEach(function () {
     el = document.createElement('div')
@@ -28,12 +28,12 @@ describe('v-show', function () {
     expect(transition.applyTransition).toHaveBeenCalled()
   })
 
-  it('should work with v-else', function (done) {
+  it('should work with krt-else', function (done) {
     var vm = new Vue({
       el: el,
       template:
-        '<p v-show="ok">YES</p>' +
-        '<p v-else>NO</p>',
+        '<p krt-show="ok">YES</p>' +
+        '<p krt-else>NO</p>',
       data: {
         ok: true
       }

@@ -1,7 +1,7 @@
 var _ = require('src/util')
 var Vue = require('src')
 
-describe('v-for', function () {
+describe('krt-for', function () {
   var el
   beforeEach(function () {
     el = document.createElement('div')
@@ -13,7 +13,7 @@ describe('v-for', function () {
       data: {
         items: [{a: 1}, {a: 2}]
       },
-      template: '<div v-for="item in items">{{$index}} {{item.a}}</div>'
+      template: '<div krt-for="item in items">{{$index}} {{item.a}}</div>'
     })
     assertMutations(vm, el, done)
   })
@@ -24,7 +24,7 @@ describe('v-for', function () {
       data: {
         items: [1, 2, 3]
       },
-      template: '<div v-for="item in items">{{$index}} {{item}}</div>'
+      template: '<div krt-for="item in items">{{$index}} {{item}}</div>'
     })
     assertPrimitiveMutations(vm, el, done)
   })
@@ -38,7 +38,7 @@ describe('v-for', function () {
           b: {a: 2}
         }
       },
-      template: '<div v-for="item in items">{{$index}} {{$key}} {{item.a}}</div>'
+      template: '<div krt-for="item in items">{{$index}} {{$key}} {{item.a}}</div>'
     })
     assertObjectMutations(vm, el, done)
   })
@@ -52,7 +52,7 @@ describe('v-for', function () {
           b: 2
         }
       },
-      template: '<div v-for="item in items">{{$index}} {{$key}} {{item}}</div>'
+      template: '<div krt-for="item in items">{{$index}} {{$key}} {{item}}</div>'
     })
     assertObjectPrimitiveMutations(vm, el, done)
   })
@@ -63,7 +63,7 @@ describe('v-for', function () {
       data: {
         items: [[1, 1], [2, 2], [3, 3]]
       },
-      template: '<div v-for="item in items">{{$index}} {{item}}</div>'
+      template: '<div krt-for="item in items">{{$index}} {{item}}</div>'
     })
     var markup = vm.items.map(function (item, i) {
       return '<div>' + i + ' ' + item.toString() + '</div>'
@@ -80,7 +80,7 @@ describe('v-for', function () {
           b: { msg: 'bbb' }
         }
       },
-      template: '<div v-for="item in items | filterBy \'aaa\'">{{item.msg}}</div>'
+      template: '<div krt-for="item in items | filterBy \'aaa\'">{{item.msg}}</div>'
     })
     expect(el.innerHTML).toBe('<div>aaa</div>')
   })
@@ -94,7 +94,7 @@ describe('v-for', function () {
           { msg: 'bbb' }
         ]
       },
-      template: '<div v-for="item in items | test">{{item.msg}} {{$key}}</div>',
+      template: '<div krt-for="item in items | test">{{item.msg}} {{$key}}</div>',
       filters: {
         test: function (val) {
           return {
@@ -107,24 +107,24 @@ describe('v-for', function () {
     expect(el.innerHTML).toBe('<div>aaa a</div><div>bbb b</div>')
   })
 
-  it('check priorities: v-if before v-for', function () {
+  it('check priorities: krt-if before krt-for', function () {
     new Vue({
       el: el,
       data: {
         items: [1, 2, 3]
       },
-      template: '<div v-if="item < 3" v-for="item in items">{{item}}</div>'
+      template: '<div krt-if="item < 3" krt-for="item in items">{{item}}</div>'
     })
     expect(el.textContent).toBe('12')
   })
 
-  it('check priorities: v-if after v-for', function () {
+  it('check priorities: krt-if after krt-for', function () {
     new Vue({
       el: el,
       data: {
         items: [1, 2, 3]
       },
-      template: '<div v-for="item in items" v-if="item < 3">{{item}}</div>'
+      template: '<div krt-for="item in items" krt-if="item < 3">{{item}}</div>'
     })
     expect(el.textContent).toBe('12')
   })
@@ -135,7 +135,7 @@ describe('v-for', function () {
       data: {
         items: [{a: 1}, {a: 2}]
       },
-      template: '<test v-for="item in items" :index="$index" :item="item"></test>',
+      template: '<test krt-for="item in items" :index="$index" :item="item"></test>',
       components: {
         test: {
           props: ['index', 'item'],
@@ -153,7 +153,7 @@ describe('v-for', function () {
       data: {
         items: [{a: 1}, {a: 2}]
       },
-      template: '<p v-for="item in items" is="test" :index="$index" :item="item"></p>',
+      template: '<p krt-for="item in items" is="test" :index="$index" :item="item"></p>',
       components: {
         test: {
           props: ['index', 'item'],
@@ -172,7 +172,7 @@ describe('v-for', function () {
         items: [{a: 1}, {a: 2}]
       },
       template:
-        '<test v-for="item in items" :index="$index" :item="item" inline-template>' +
+        '<test krt-for="item in items" :index="$index" :item="item" inline-template>' +
           '{{index}} {{item.a}}' +
         '</test>',
       components: {
@@ -190,7 +190,7 @@ describe('v-for', function () {
       data: {
         items: [1, 2, 3]
       },
-      template: '<test v-for="item in items" :index="$index" :value="item"></test>',
+      template: '<test krt-for="item in items" :index="$index" :value="item"></test>',
       components: {
         test: {
           props: ['index', 'value'],
@@ -211,7 +211,7 @@ describe('v-for', function () {
           b: {a: 2}
         }
       },
-      template: '<test v-for="item in items" :key="$key" :index="$index" :value="item"></test>',
+      template: '<test krt-for="item in items" :key="$key" :index="$index" :value="item"></test>',
       components: {
         test: {
           props: ['key', 'index', 'value'],
@@ -232,8 +232,8 @@ describe('v-for', function () {
           { items: [{a: 3}, {a: 4}], a: 2 }
         ]
       },
-      template: '<div v-for="item in items">' +
-          '<p v-for="subItem in item.items">{{$index}} {{subItem.a}} {{$parent.$index}} {{item.a}}</p>' +
+      template: '<div krt-for="item in items">' +
+          '<p krt-for="subItem in item.items">{{$index}} {{subItem.a}} {{$parent.$index}} {{item.a}}</p>' +
         '</div>'
     })
     expect(el.innerHTML).toBe(
@@ -252,9 +252,9 @@ describe('v-for', function () {
         }
       },
       template:
-        '<div v-for="list in listHash">' +
+        '<div krt-for="list in listHash">' +
           '{{$key}}' +
-          '<p v-for="item in list">{{item.a}}</p>' +
+          '<p krt-for="item in list">{{item.a}}</p>' +
         '</div>'
     })
     function output (key) {
@@ -268,7 +268,7 @@ describe('v-for', function () {
   it('dynamic component type based on instance data', function () {
     new Vue({
       el: el,
-      template: '<component v-for="item in list" :is="\'view-\' + item.type"></component>',
+      template: '<component krt-for="item in list" :is="\'view-\' + item.type"></component>',
       data: {
         list: [
           { type: 'a' },
@@ -293,7 +293,7 @@ describe('v-for', function () {
     el = document.createElement('div')
     new Vue({
       el: el,
-      template: '<component v-for="type in list" :is="\'view-\' + type"></component>',
+      template: '<component krt-for="type in list" :is="\'view-\' + type"></component>',
       data: {
         list: ['a', 'b', 'c']
       },
@@ -315,7 +315,7 @@ describe('v-for', function () {
   it('fragment loop', function (done) {
     var vm = new Vue({
       el: el,
-      template: '<template v-for="item in list"><p>{{item.a}}</p><p>{{item.a + 1}}</p></template>',
+      template: '<template krt-for="item in list"><p>{{item.a}}</p><p>{{item.a + 1}}</p></template>',
       data: {
         list: [
           { a: 1 },
@@ -350,7 +350,7 @@ describe('v-for', function () {
   it('fragment loop with component', function (done) {
     var vm = new Vue({
       el: el,
-      template: '<template v-for="item in list"><test :a="item.a"></test></template>',
+      template: '<template krt-for="item in list"><test :a="item.a"></test></template>',
       data: {
         list: [
           { a: 1 },
@@ -391,7 +391,7 @@ describe('v-for', function () {
   it('array filters', function (done) {
     var vm = new Vue({
       el: el,
-      template: '<div v-for="item in list | filterBy filterKey | orderBy sortKey -1 | limitBy 2">{{item.id}}</div>',
+      template: '<div krt-for="item in list | filterBy filterKey | orderBy sortKey -1 | limitBy 2">{{item.id}}</div>',
       data: {
         filterKey: 'foo',
         sortKey: 'id',
@@ -455,7 +455,7 @@ describe('v-for', function () {
   it('orderBy supporting $key for object repeaters', function (done) {
     var vm = new Vue({
       el: el,
-      template: '<div v-for="val in obj | orderBy sortKey">{{val}}</div>',
+      template: '<div krt-for="val in obj | orderBy sortKey">{{val}}</div>',
       data: {
         sortKey: '$key',
         obj: {
@@ -476,7 +476,7 @@ describe('v-for', function () {
   it('orderBy supporting alias for primitive arrays', function () {
     new Vue({
       el: el,
-      template: '<div v-for="val in list | orderBy \'val\'">{{val}}</div>',
+      template: '<div krt-for="val in list | orderBy \'val\'">{{val}}</div>',
       data: {
         list: [3, 2, 1]
       }
@@ -487,7 +487,7 @@ describe('v-for', function () {
   it('track by id', function (done) {
     var vm = new Vue({
       el: el,
-      template: '<test v-for="item in list" :item="item" track-by="id"></test>',
+      template: '<test krt-for="item in list" :item="item" track-by="id"></test>',
       data: {
         list: [
           { id: 1, msg: 'foo' },
@@ -531,7 +531,7 @@ describe('v-for', function () {
   it('track by nested id path', function (done) {
     var vm = new Vue({
       el: el,
-      template: '<test v-for="item in list" :item="item" track-by="nested.id"></test>',
+      template: '<test krt-for="item in list" :item="item" track-by="nested.id"></test>',
       data: {
         list: [
           { nested: { id: 1 }, msg: 'foo' },
@@ -578,7 +578,7 @@ describe('v-for', function () {
       data: {
         items: [{a: 1}, {a: 2}]
       },
-      template: '<div v-for="item in items" track-by="$index">{{$index}} {{item.a}}</div>'
+      template: '<div krt-for="item in items" track-by="$index">{{$index}} {{item.a}}</div>'
     })
 
     assertMarkup()
@@ -606,7 +606,7 @@ describe('v-for', function () {
       data: {
         items: [1, 2, 3]
       },
-      template: '<div v-for="item in items" track-by="$index">{{$index}} {{item}}</div>'
+      template: '<div krt-for="item in items" track-by="$index">{{$index}} {{item}}</div>'
     })
     assertPrimitiveMutationsWithDuplicates(vm, el, done)
   })
@@ -614,7 +614,7 @@ describe('v-for', function () {
   it('warn missing alias', function () {
     new Vue({
       el: el,
-      template: '<div v-for="items"></div>'
+      template: '<div krt-for="items"></div>'
     })
     expect('alias is required').toHaveBeenWarned()
   })
@@ -623,7 +623,7 @@ describe('v-for', function () {
     var obj = {}
     new Vue({
       el: el,
-      template: '<div v-for="item in items"></div>',
+      template: '<div krt-for="item in items"></div>',
       data: {
         items: [obj, obj]
       }
@@ -635,7 +635,7 @@ describe('v-for', function () {
     var obj = {}
     var vm = new Vue({
       el: el,
-      template: '<div v-for="item in items"></div>',
+      template: '<div krt-for="item in items"></div>',
       data: {
         items: [obj]
       }
@@ -651,7 +651,7 @@ describe('v-for', function () {
   it('warn duplicate trackby id', function () {
     new Vue({
       el: el,
-      template: '<div v-for="item in items" track-by="id"></div>',
+      template: '<div krt-for="item in items" track-by="id"></div>',
       data: {
         items: [{id: 1}, {id: 1}]
       }
@@ -662,7 +662,7 @@ describe('v-for', function () {
   it('key val syntax with object', function (done) {
     var vm = new Vue({
       el: el,
-      template: '<div v-for="(key,val) in items">{{$index}} {{key}} {{val.a}}</div>',
+      template: '<div krt-for="(key,val) in items">{{$index}} {{key}} {{val.a}}</div>',
       data: {
         items: {
           a: {a: 1},
@@ -676,7 +676,7 @@ describe('v-for', function () {
   it('key val syntax with array', function (done) {
     var vm = new Vue({
       el: el,
-      template: '<div v-for="(i, item) in items">{{i}} {{item.a}}</div>',
+      template: '<div krt-for="(i, item) in items">{{i}} {{item.a}}</div>',
       data: {
         items: [{a: 1}, {a: 2}]
       }
@@ -684,10 +684,10 @@ describe('v-for', function () {
     assertMutations(vm, el, done)
   })
 
-  it('key val syntax with nested v-for s', function () {
+  it('key val syntax with nested krt-for s', function () {
     new Vue({
       el: el,
-      template: '<div v-for="(key,val) in items"><div v-for="(subkey,subval) in val">{{key}} {{subkey}} {{subval}}</div></div>',
+      template: '<div krt-for="(key,val) in items"><div krt-for="(subkey,subval) in val">{{key}} {{subkey}} {{subval}}</div></div>',
       data: {
         items: {'a': {'b': 'c'}}
       }
@@ -698,7 +698,7 @@ describe('v-for', function () {
   it('repeat number', function () {
     new Vue({
       el: el,
-      template: '<div v-for="n in 3">{{$index}} {{n}}</div>'
+      template: '<div krt-for="n in 3">{{$index}} {{n}}</div>'
     })
     expect(el.innerHTML).toBe('<div>0 0</div><div>1 1</div><div>2 2</div>')
   })
@@ -706,7 +706,7 @@ describe('v-for', function () {
   it('repeat string', function () {
     new Vue({
       el: el,
-      template: '<div v-for="letter in \'vue\'">{{$index}} {{letter}}</div>'
+      template: '<div krt-for="letter in \'vue\'">{{$index}} {{letter}}</div>'
     })
     expect(el.innerHTML).toBe('<div>0 v</div><div>1 u</div><div>2 e</div>')
   })
@@ -714,7 +714,7 @@ describe('v-for', function () {
   it('teardown', function () {
     var vm = new Vue({
       el: el,
-      template: '<div v-for="item in items"></div>',
+      template: '<div krt-for="item in items"></div>',
       data: {
         items: [{a: 1}, {a: 2}]
       }
@@ -727,7 +727,7 @@ describe('v-for', function () {
     document.body.appendChild(el)
     var vm = new Vue({
       el: el,
-      template: '<div v-for="item in items" transition="test">{{item.a}}</div>',
+      template: '<div krt-for="item in items" transition="test">{{item.a}}</div>',
       data: {
         items: [{a: 1}, {a: 2}, {a: 3}]
       },
@@ -751,12 +751,12 @@ describe('v-for', function () {
     }, 100)
   })
 
-  it('v-model binding on alias', function () {
+  it('krt-model binding on alias', function () {
     var vm = new Vue({
       el: el,
       template:
-        '<div v-for="val in items"><input v-model="val"></div>' +
-        '<div v-for="val in obj"><input v-model="val"></div>',
+        '<div krt-for="val in items"><input krt-model="val"></div>' +
+        '<div krt-for="val in obj"><input krt-model="val"></div>',
       data: {
         items: ['a'],
         obj: { foo: 'a' }
@@ -778,12 +778,12 @@ describe('v-for', function () {
     }
   })
 
-  it('warn v-model on alias with filters', function () {
+  it('warn krt-model on alias with filters', function () {
     var vm = new Vue({
       el: el,
       template:
-        '<div v-for="item in items | orderBy \'item\'">' +
-          '<input v-model="item">' +
+        '<div krt-for="item in items | orderBy \'item\'">' +
+          '<input krt-model="item">' +
         '</div>',
       data: {
         items: ['a', 'b']
@@ -797,9 +797,9 @@ describe('v-for', function () {
     var vm = new Vue({
       el: el,
       template:
-        '<div v-for="item in list" track-by="id">' +
+        '<div krt-for="item in list" track-by="id">' +
           '{{item.msg}}' +
-          '<div v-for="subItem in item.list" track-by="id">' +
+          '<div krt-for="subItem in item.list" track-by="id">' +
             '{{subItem.msg}}' +
           '</div>' +
         '</div>',
@@ -856,7 +856,7 @@ describe('v-for', function () {
     var arr = [obj.b, obj.a]
     var vm = new Vue({
       el: el,
-      template: '<div v-for="item in obj">{{item.msg}}</div>',
+      template: '<div krt-for="item in obj">{{item.msg}}</div>',
       data: {
         obj: obj
       }
@@ -880,7 +880,7 @@ describe('v-for', function () {
     var detachSpy = jasmine.createSpy('detach')
     var vm = new Vue({
       el: el,
-      template: '<test v-for="item in items"></test>',
+      template: '<test krt-for="item in items"></test>',
       data: {
         items: [1, 2]
       },
@@ -914,7 +914,7 @@ describe('v-for', function () {
   it('access parent\'s $refs', function () {
     var vm = new Vue({
       el: document.createElement('div'),
-      template: '<c1 v-ref:c1><div v-for="n in 2">{{$refs.c1.d}}</div></c1>',
+      template: '<c1 krt-ref:c1><div krt-for="n in 2">{{$refs.c1.d}}</div></c1>',
       components: {
         c1: {
           template: '<div><slot></slot></div>',
@@ -933,7 +933,7 @@ describe('v-for', function () {
   it('access parent scope\'s $els', function (done) {
     var vm = new Vue({
       el: document.createElement('div'),
-      template: '<div data-d=1 v-el:a><div v-for="n in 2">{{ready ? $els.a.getAttribute("data-d") : 0}}</div></div>',
+      template: '<div data-d=1 krt-el:a><div krt-for="n in 2">{{ready ? $els.a.getAttribute("data-d") : 0}}</div></div>',
       data: {
         ready: false
       }
@@ -976,7 +976,7 @@ function go (fn, cb) {
 }
 
 /**
- * Assert mutation and markup correctness for v-for on
+ * Assert mutation and markup correctness for krt-for on
  * an Array of Objects
  */
 
@@ -1047,7 +1047,7 @@ function assertMutations (vm, el, done) {
 }
 
 /**
- * Assert mutation and markup correctness for v-for on
+ * Assert mutation and markup correctness for krt-for on
  * an Array of primitive values
  */
 
@@ -1115,7 +1115,7 @@ function assertPrimitiveMutations (vm, el, done) {
 }
 
 /**
- * Assert mutation and markup correctness for v-for on
+ * Assert mutation and markup correctness for krt-for on
  * an Array of primitive values when using track-by="$index"
  */
 
@@ -1183,7 +1183,7 @@ function assertPrimitiveMutationsWithDuplicates (vm, el, done) {
 }
 
 /**
- * Assert mutation and markup correctness for v-for on
+ * Assert mutation and markup correctness for krt-for on
  * an Object of Objects
  */
 
@@ -1221,7 +1221,7 @@ function assertObjectMutations (vm, el, done) {
 }
 
 /**
- * Assert mutation and markup correctness for v-for on
+ * Assert mutation and markup correctness for krt-for on
  * an Object of primitive values
  */
 

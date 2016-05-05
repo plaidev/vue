@@ -60,7 +60,7 @@ export default function (Vue) {
     this._context = options._context || this.$parent
 
     // scope:
-    // if this is inside an inline v-for, the scope
+    // if this is inside an inline krt-for, the scope
     // will be the intermediate scope created for this
     // repeat fragment. this is used for linking props
     // and container directives.

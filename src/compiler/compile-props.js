@@ -128,11 +128,11 @@ export function compileProps (el, propOptions, vm) {
       value = /[A-Z\-]/.test(name) && (
         el.getAttribute(lowerCaseName) ||
         el.getAttribute(':' + lowerCaseName) ||
-        el.getAttribute('v-bind:' + lowerCaseName) ||
+        el.getAttribute('krt-bind:' + lowerCaseName) ||
         el.getAttribute(':' + lowerCaseName + '.once') ||
-        el.getAttribute('v-bind:' + lowerCaseName + '.once') ||
+        el.getAttribute('krt-bind:' + lowerCaseName + '.once') ||
         el.getAttribute(':' + lowerCaseName + '.sync') ||
-        el.getAttribute('v-bind:' + lowerCaseName + '.sync')
+        el.getAttribute('krt-bind:' + lowerCaseName + '.sync')
       )
       if (value) {
         warn(

@@ -17,7 +17,7 @@ export default {
       // hold nodes
       this.nodes = []
       // replace the placeholder with proper anchor
-      this.anchor = createAnchor('v-html')
+      this.anchor = createAnchor('krt-html')
       replace(this.el, this.anchor)
     }
   },

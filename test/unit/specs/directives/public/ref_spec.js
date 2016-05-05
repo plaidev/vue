@@ -23,7 +23,7 @@ describe('ref', function () {
       data: {
         ref: 'test2'
       },
-      template: '<test v-ref:test></test><test2 v-ref:test-case></test2>'
+      template: '<test krt-ref:test></test><test2 krt-ref:test-case></test2>'
     })
     expect(vm.$refs.test).toBeTruthy()
     expect(vm.$refs.test.$options.id).toBe('test')
@@ -36,7 +36,7 @@ describe('ref', function () {
       el: el,
       components: components,
       data: { test: 'test' },
-      template: '<component :is="test" v-ref:test></component>'
+      template: '<component :is="test" krt-ref:test></component>'
     })
     expect(vm.$refs.test.$options.id).toBe('test')
     vm.test = 'test2'
@@ -55,7 +55,7 @@ describe('ref', function () {
       el: el,
       components: components,
       data: { test: 'test' },
-      template: '<component :is="test" v-ref:test keep-alive></component>'
+      template: '<component :is="test" krt-ref:test keep-alive></component>'
     })
     expect(vm.$refs.test.$options.id).toBe('test')
     vm.test = 'test2'
@@ -75,8 +75,8 @@ describe('ref', function () {
       data: { view: 'one' },
       template:
         '{{$refs.test.value}}' +
-        '<component :is="view" v-ref:test></component>' +
-        '<div v-if="$refs.test.value > 1">ok</div>',
+        '<component :is="view" krt-ref:test></component>' +
+        '<div krt-if="$refs.test.value > 1">ok</div>',
       components: {
         one: {
           id: 'one',
@@ -115,7 +115,7 @@ describe('ref', function () {
       el: el,
       template:
         '<div>' +
-          '<comp v-ref:out>{{$refs.out.msg}}</comp>' +
+          '<comp krt-ref:out>{{$refs.out.msg}}</comp>' +
         '</div>',
       components: {
         comp: {
@@ -138,7 +138,7 @@ describe('ref', function () {
   it('warn when used on non-component node', function () {
     new Vue({
       el: el,
-      template: '<div v-ref:test></div>'
+      template: '<div krt-ref:test></div>'
     })
     expect('must be used on a child component').toHaveBeenWarned()
   })

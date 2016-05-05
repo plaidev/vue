@@ -27,12 +27,12 @@ export default {
         this.el.hasChildNodes() &&
         content.childNodes.length === 1 &&
         content.childNodes[0].nodeType === 1 &&
-        content.childNodes[0].hasAttribute('v-if')
+        content.childNodes[0].hasAttribute('krt-if')
       ) {
-        // if the inserted slot has v-if
-        // inject fallback content as the v-else
+        // if the inserted slot has krt-if
+        // inject fallback content as the krt-else
         const elseBlock = document.createElement('template')
-        elseBlock.setAttribute('v-else', '')
+        elseBlock.setAttribute('krt-else', '')
         elseBlock.innerHTML = this.el.innerHTML
         // the else block should be compiled in child scope
         elseBlock._context = this.vm

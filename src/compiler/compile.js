@@ -18,11 +18,11 @@ import {
 } from '../util/index'
 
 // special binding prefixes
-const bindRE = /^v-bind:|^:/
-const onRE = /^v-on:|^@/
-const dirAttrRE = /^v-([^:]+)(?:$|:(.*)$)/
+const bindRE = /^krt-bind:|^:/
+const onRE = /^krt-on:|^@/
+const dirAttrRE = /^krt-([^:]+)(?:$|:(.*)$)/
 const modifierRE = /\.[^\.]+/g
-const transitionRE = /^(v-bind:|:)?transition$/
+const transitionRE = /^(krt-bind:|:)?transition$/
 
 // default directive priority
 const DEFAULT_PRIORITY = 1000
@@ -66,7 +66,7 @@ export function compile (el, options, partial) {
    * @param {Vue} vm
    * @param {Element|DocumentFragment} el
    * @param {Vue} [host] - host vm of transcluded content
-   * @param {Object} [scope] - v-for scope
+   * @param {Object} [scope] - krt-for scope
    * @param {Fragment} [frag] - link context fragment
    * @return {Function|undefined}
    */
@@ -230,7 +230,7 @@ export function compileRoot (el, options, contextOptions) {
     var names = containerAttrs
       .filter(function (attr) {
         // allow vue-loader/vueify scoped css attributes
-        return attr.name.indexOf('_v-') < 0 &&
+        return attr.name.indexOf('_krt-') < 0 &&
           // allow event listeners
           !onRE.test(attr.name) &&
           // allow slots
@@ -401,7 +401,7 @@ function processTextToken (token, options) {
     el = document.createTextNode(token.value)
   } else {
     if (token.html) {
-      el = document.createComment('v-html')
+      el = document.createComment('krt-html')
       setTokenType('html')
     } else {
       // IE will clean up empty textNodes during
@@ -573,14 +573,14 @@ function checkComponent (el, options) {
  */
 
 function checkTerminalDirectives (el, attrs, options) {
-  // skip v-pre
-  if (getAttr(el, 'v-pre') !== null) {
+  // skip krt-pre
+  if (getAttr(el, 'krt-pre') !== null) {
     return skip
   }
-  // skip v-else block, but only if following v-if
-  if (el.hasAttribute('v-else')) {
+  // skip krt-else block, but only if following krt-if
+  if (el.hasAttribute('krt-else')) {
     var prev = el.previousElementSibling
-    if (prev && prev.hasAttribute('v-if')) {
+    if (prev && prev.hasAttribute('krt-if')) {
       return skip
     }
   }
@@ -641,7 +641,7 @@ function makeTerminalNodeLinkFn (el, dirName, value, options, def, rawName, arg,
     modifiers: modifiers,
     def: def
   }
-  // check ref for v-for and router-view
+  // check ref for krt-for and router-view
   if (dirName === 'for' || dirName === 'router-view') {
     descriptor.ref = findRef(el)
   }
@@ -683,14 +683,14 @@ function compileDirectives (attrs, options) {
       value = tokensToExp(tokens)
       arg = name
       pushDir('bind', publicDirectives.bind, tokens)
-      // warn against mixing mustaches with v-bind
+      // warn against mixing mustaches with krt-bind
       if (process.env.NODE_ENV !== 'production') {
         if (name === 'class' && Array.prototype.some.call(attrs, function (attr) {
-          return attr.name === ':class' || attr.name === 'v-bind:class'
+          return attr.name === ':class' || attr.name === 'krt-bind:class'
         })) {
           warn(
             'class="' + rawValue + '": Do not mix mustache interpolation ' +
-            'and v-bind for "class" on the same element. Use one or the other.',
+            'and krt-bind for "class" on the same element. Use one or the other.',
             options
           )
         }
@@ -725,7 +725,7 @@ function compileDirectives (attrs, options) {
       dirName = matched[1]
       arg = matched[2]
 
-      // skip v-else (when used with v-show)
+      // skip krt-else (when used with krt-show)
       if (dirName === 'else') {
         continue
       }

@@ -37,7 +37,7 @@ function noop () {}
  * @param {Vue} vm
  * @param {Node} el
  * @param {Vue} [host] - transclusion host component
- * @param {Object} [scope] - v-for scope
+ * @param {Object} [scope] - krt-for scope
  * @param {Fragment} [frag] - owner fragment
  * @constructor
  */
@@ -83,7 +83,8 @@ Directive.prototype._bind = function () {
     (name !== 'cloak' || this.vm._isCompiled) &&
     this.el && this.el.removeAttribute
   ) {
-    var attr = descriptor.attr || ('v-' + name)
+    var attr = descriptor.attr || ('krt-' + name)
+    console.log('directive', name, attr)
     this.el.removeAttribute(attr)
   }
 
@@ -141,7 +142,7 @@ Directive.prototype._bind = function () {
         scope: this._scope
       }
     )
-    // v-model with inital inline value need to sync back to
+    // krt-model with inital inline value need to sync back to
     // model instead of update to DOM on init. They would
     // set the afterBind hook to indicate that.
     if (this.afterBind) {
@@ -247,7 +248,7 @@ Directive.prototype._checkStatement = function () {
 /**
  * Set the corresponding value with the setter.
  * This should only be used in two-way directives
- * e.g. v-model.
+ * e.g. krt-model.
  *
  * @param {*} value
  * @public

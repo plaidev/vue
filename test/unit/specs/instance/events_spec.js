@@ -205,10 +205,10 @@ describe('Instance Events', function () {
       vm.$remove()
     })
 
-    it('compile v-on on child component', function () {
+    it('compile krt-on on child component', function () {
       var vm = new Vue({
         el: document.createElement('div'),
-        template: '<comp v-on:hook:created="onCreated" @ready="onReady" @ok="a++"></comp>',
+        template: '<comp krt-on:hook:created="onCreated" @ready="onReady" @ok="a++"></comp>',
         data: {
           a: 0
         },
@@ -230,7 +230,7 @@ describe('Instance Events', function () {
       expect(vm.a).toBe(1)
     })
 
-    it('warn missing handler for child component v-on', function () {
+    it('warn missing handler for child component krt-on', function () {
       new Vue({
         el: document.createElement('div'),
         template: '<comp @test="onThat"></comp>',
@@ -238,7 +238,7 @@ describe('Instance Events', function () {
           comp: {}
         }
       })
-      expect('v-on:test="onThat" expects a function value').toHaveBeenWarned()
+      expect('krt-on:test="onThat" expects a function value').toHaveBeenWarned()
     })
 
     it('passing $arguments', function () {

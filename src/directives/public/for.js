@@ -49,7 +49,7 @@ const vFor = {
 
     if (!this.alias) {
       process.env.NODE_ENV !== 'production' && warn(
-        'Invalid v-for expression "' + this.descriptor.raw + '": ' +
+        'Invalid krt-for expression "' + this.descriptor.raw + '": ' +
         'alias is required.',
         this.vm
       )
@@ -57,13 +57,13 @@ const vFor = {
     }
 
     // uid as a cache identifier
-    this.id = '__v-for__' + (++uid)
+    this.id = '__krt-for__' + (++uid)
 
     // check if this is an option list,
     // so that we know if we need to update the <select>'s
-    // v-model when the option list has changed.
-    // because v-model has a lower priority than v-for,
-    // the v-model is not bound here yet, so we have to
+    // krt-model when the option list has changed.
+    // because krt-model has a lower priority than krt-for,
+    // the krt-model is not bound here yet, so we have to
     // retrive it in the actual updateModel() function.
     var tag = this.el.tagName
     this.isOption =
@@ -71,8 +71,8 @@ const vFor = {
       this.el.parentNode.tagName === 'SELECT'
 
     // setup anchor nodes
-    this.start = createAnchor('v-for-start')
-    this.end = createAnchor('v-for-end')
+    this.start = createAnchor('krt-for-start')
+    this.end = createAnchor('krt-for-end')
     replace(this.el, this.end)
     before(this.start, this.end)
 
@@ -266,7 +266,7 @@ const vFor = {
   },
 
   /**
-   * Update the v-ref on owner vm.
+   * Update the krt-ref on owner vm.
    */
 
   updateRef () {
@@ -286,7 +286,7 @@ const vFor = {
   },
 
   /**
-   * For option lists, update the containing v-model on
+   * For option lists, update the containing krt-model on
    * parent <select>.
    */
 
@@ -524,7 +524,7 @@ const vFor = {
    *
    * It is necessary for this to be called during the
    * wathcer's dependency collection phase because we want
-   * the v-for to update when the source Object is mutated.
+   * the krt-for to update when the source Object is mutated.
    */
 
   _postProcess (value) {
@@ -576,7 +576,7 @@ const vFor = {
  * should have been set to false so we can skip them.
  *
  * If this is a block repeat, we want to make sure we only
- * return frag that is bound to this v-for. (see #929)
+ * return frag that is bound to this krt-for. (see #929)
  *
  * @param {Fragment} frag
  * @param {Comment|Text} anchor
@@ -638,7 +638,7 @@ function range (n) {
 if (process.env.NODE_ENV !== 'production') {
   vFor.warnDuplicate = function (value) {
     warn(
-      'Duplicate value found in v-for="' + this.descriptor.raw + '": ' +
+      'Duplicate value found in krt-for="' + this.descriptor.raw + '": ' +
       JSON.stringify(value) + '. Use track-by="$index" if ' +
       'you are expecting duplicate values.',
       this.vm

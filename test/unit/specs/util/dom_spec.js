@@ -23,10 +23,10 @@ describe('Util - DOM', function () {
   })
 
   it('getAttr', function () {
-    target.setAttribute('v-test', 'ok')
-    var val = _.getAttr(target, 'v-test')
+    target.setAttribute('krt-test', 'ok')
+    var val = _.getAttr(target, 'krt-test')
     expect(val).toBe('ok')
-    expect(target.hasAttribute('v-test')).toBe(false)
+    expect(target.hasAttribute('krt-test')).toBe(false)
   })
 
   it('before', function () {

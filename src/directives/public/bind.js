@@ -8,7 +8,7 @@ const xlinkNS = 'http://www.w3.org/1999/xlink'
 const xlinkRE = /^xlink:/
 
 // check for attributes that prohibit interpolations
-const disallowedInterpAttrRE = /^v-|^:|^@|^(?:is|transition|transition-mode|debounce|track-by|stagger|enter-stagger|leave-stagger)$/
+const disallowedInterpAttrRE = /^krt-|^:|^@|^(?:is|transition|transition-mode|debounce|track-by|stagger|enter-stagger|leave-stagger)$/
 // these attributes should also set their corresponding properties
 // because they only affect the initial state of the element
 const attrWithPropsRE = /^(?:value|checked|selected|muted)$/
@@ -17,7 +17,7 @@ const attrWithPropsRE = /^(?:value|checked|selected|muted)$/
 const enumeratedAttrRE = /^(?:draggable|contenteditable|spellcheck)$/
 
 // these attributes should set a hidden property for
-// binding v-model to object values
+// binding krt-model to object values
 const modelProps = {
   value: '_value',
   'true-value': '_trueValue',
@@ -66,7 +66,7 @@ export default {
         if (attr === 'src') {
           warn(
             raw + 'interpolation in "src" attribute will cause ' +
-            'a 404 request. Use v-bind:src instead.',
+            'a 404 request. Use krt-bind:src instead.',
             this.vm
           )
         }
@@ -76,7 +76,7 @@ export default {
           warn(
             raw + 'interpolation in "style" attribute will cause ' +
             'the attribute to be discarded in Internet Explorer. ' +
-            'Use v-bind:style instead.',
+            'Use krt-bind:style instead.',
             this.vm
           )
         }
@@ -96,7 +96,7 @@ export default {
     }
   },
 
-  // share object handler with v-bind:class
+  // share object handler with krt-bind:class
   handleObject: vStyle.handleObject,
 
   handleSingle (attr, value) {
@@ -120,7 +120,7 @@ export default {
     var modelProp = modelProps[attr]
     if (!interp && modelProp) {
       el[modelProp] = value
-      // update v-model if present
+      // update krt-model if present
       var model = el.__v_model
       if (model) {
         model.listener()

@@ -24,7 +24,7 @@ export default {
   },
 
   bind () {
-    this.anchor = createAnchor('v-partial')
+    this.anchor = createAnchor('krt-partial')
     replace(this.el, this.anchor)
     this.insert(this.params.name)
   },

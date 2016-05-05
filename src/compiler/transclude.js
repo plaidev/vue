@@ -20,7 +20,7 @@ const specialCharRE = /[^\w\-:\.]/
  * instance option object. This allows us to transclude
  * a template node/fragment before the instance is created,
  * so the processed fragment can then be cloned and reused
- * in v-for.
+ * in krt-for.
  *
  * @param {Element} el
  * @param {Object} options
@@ -54,8 +54,8 @@ export function transclude (el, options) {
     // anchors for fragment instance
     // passing in `persist: true` to avoid them being
     // discarded by IE during template cloning
-    prepend(createAnchor('v-start', true), el)
-    el.appendChild(createAnchor('v-end', true))
+    prepend(createAnchor('krt-start', true), el)
+    el.appendChild(createAnchor('krt-end', true))
   }
   return el
 }
@@ -99,9 +99,9 @@ function transcludeTemplate (el, options) {
         // element directive
         resolveAsset(options, 'elementDirectives', tag) ||
         // for block
-        replacer.hasAttribute('v-for') ||
+        replacer.hasAttribute('krt-for') ||
         // if block
-        replacer.hasAttribute('v-if')
+        replacer.hasAttribute('krt-if')
       ) {
         return frag
       } else {

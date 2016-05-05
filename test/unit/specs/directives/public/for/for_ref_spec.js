@@ -1,7 +1,7 @@
 var Vue = require('src')
 var _ = Vue.util
 
-describe('v-for + ref', function () {
+describe('krt-for + ref', function () {
   var el
   beforeEach(function () {
     el = document.createElement('div')
@@ -11,7 +11,7 @@ describe('v-for + ref', function () {
     var vm = new Vue({
       el: el,
       data: { items: [1, 2, 3, 4, 5] },
-      template: '<test v-for="item in items" :item="item" v-ref:test></test>',
+      template: '<test krt-for="item in items" :item="item" krt-ref:test></test>',
       components: {
         test: {
           props: ['item']
@@ -40,7 +40,7 @@ describe('v-for + ref', function () {
           b: 2
         }
       },
-      template: '<test v-for="item in items" :item="item" v-ref:test></test>',
+      template: '<test krt-for="item in items" :item="item" krt-ref:test></test>',
       components: {
         test: {
           props: ['item']
@@ -64,10 +64,10 @@ describe('v-for + ref', function () {
   it('nested', function () {
     var vm = new Vue({
       el: el,
-      template: '<c1 v-ref:c1></c1>',
+      template: '<c1 krt-ref:c1></c1>',
       components: {
         c1: {
-          template: '<div v-for="n in 2" v-ref:c2></div>'
+          template: '<div krt-for="n in 2" krt-ref:c2></div>'
         }
       }
     })

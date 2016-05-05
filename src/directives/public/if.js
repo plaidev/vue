@@ -18,16 +18,16 @@ export default {
     if (!el.__vue__) {
       // check else block
       var next = el.nextElementSibling
-      if (next && getAttr(next, 'v-else') !== null) {
+      if (next && getAttr(next, 'krt-else') !== null) {
         remove(next)
         this.elseEl = next
       }
       // check main block
-      this.anchor = createAnchor('v-if')
+      this.anchor = createAnchor('krt-if')
       replace(el, this.anchor)
     } else {
       process.env.NODE_ENV !== 'production' && warn(
-        'v-if="' + this.expression + '" cannot be ' +
+        'krt-if="' + this.expression + '" cannot be ' +
         'used on an instance root element.',
         this.vm
       )

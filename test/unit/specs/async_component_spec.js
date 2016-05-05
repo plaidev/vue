@@ -201,10 +201,10 @@ describe('Async components', function () {
     expect('Reason: nooooo').toHaveBeenWarned()
   })
 
-  it('v-for', function (done) {
+  it('krt-for', function (done) {
     new Vue({
       el: el,
-      template: '<test v-for="n in list" :n="n"></test>',
+      template: '<test krt-for="n in list" :n="n"></test>',
       data: {
         list: [1, 2, 3]
       },

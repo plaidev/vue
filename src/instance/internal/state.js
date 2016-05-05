@@ -67,7 +67,7 @@ export default function (Vue) {
     // make sure to convert string selectors into element now
     el = options.el = query(el)
     this._propsUnlinkFn = el && el.nodeType === 1 && props
-      // props must be linked in proper scope if inside v-for
+      // props must be linked in proper scope if inside krt-for
       ? compileAndLinkProps(this, el, props, this._scope)
       : null
   }

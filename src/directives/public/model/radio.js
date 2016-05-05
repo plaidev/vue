@@ -7,7 +7,7 @@ export default {
     var el = this.el
 
     this.getValue = function () {
-      // value overwrite via v-bind:value
+      // value overwrite via krt-bind:value
       if (el.hasOwnProperty('_value')) {
         return el._value
       }

@@ -93,6 +93,7 @@ export default {
     // store that check result on itself. This also allows
     // easier test coverage control by unsetting the global
     // jQuery variable in tests.
+    var jQuery = null;
     this.hasjQuery = typeof jQuery === 'function'
     if (this.hasjQuery) {
       const method = jQuery.fn.on ? 'on' : 'bind'

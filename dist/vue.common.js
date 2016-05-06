@@ -1130,7 +1130,7 @@ function getAttr(node, _attr) {
 }
 
 /**
- * Get an attribute with colon or v-bind: prefix.
+ * Get an attribute with colon or krt-bind: prefix.
  *
  * @param {Node} node
  * @param {String} name
@@ -1140,7 +1140,7 @@ function getAttr(node, _attr) {
 function getBindAttr(node, name) {
   var val = getAttr(node, ':' + name);
   if (val === null) {
-    val = getAttr(node, 'v-bind:' + name);
+    val = getAttr(node, 'krt-bind:' + name);
   }
   return val;
 }
@@ -1154,7 +1154,7 @@ function getBindAttr(node, name) {
  */
 
 function hasBindAttr(node, name) {
-  return node.hasAttribute(name) || node.hasAttribute(':' + name) || node.hasAttribute('v-bind:' + name);
+  return node.hasAttribute(name) || node.hasAttribute(':' + name) || node.hasAttribute('krt-bind:' + name);
 }
 
 /**
@@ -1390,9 +1390,9 @@ function isTemplate(el) {
  * Create an "anchor" for performing dom insertion/removals.
  * This is used in a number of scenarios:
  * - fragment instance
- * - v-html
- * - v-if
- * - v-for
+ * - krt-html
+ * - krt-if
+ * - krt-for
  * - component
  *
  * @param {String} content
@@ -1417,7 +1417,7 @@ function createAnchor(content, persist) {
  * @return {String|undefined}
  */
 
-var refRE = /^v-ref:/;
+var refRE = /^krt-ref:/;
 
 function findRef(node) {
   if (node.hasAttributes()) {
@@ -2028,7 +2028,7 @@ var arrayKeys = Object.getOwnPropertyNames(arrayMethods);
 /**
  * By default, when a reactive property is set, the new value is
  * also converted to become reactive. However in certain cases, e.g.
- * v-for scope alias and props, we don't want to force conversion
+ * krt-for scope alias and props, we don't want to force conversion
  * because the value may be a nested value under a frozen data structure.
  *
  * So whenever we want to set a reactive property without forcing
@@ -2367,7 +2367,7 @@ function initMixin (Vue) {
     this._context = options._context || this.$parent;
 
     // scope:
-    // if this is inside an inline v-for, the scope
+    // if this is inside an inline krt-for, the scope
     // will be the intermediate scope created for this
     // repeat fragment. this is used for linking props
     // and container directives.
@@ -3149,11 +3149,11 @@ Watcher.prototype.set = function (value) {
       warn('Error when evaluating setter ' + '"' + this.expression + '": ' + e.toString(), this.vm);
     }
   }
-  // two-way sync for v-for alias
+  // two-way sync for krt-for alias
   var forContext = scope.$forContext;
   if (forContext && forContext.alias === this.expression) {
     if (forContext.filters) {
-      process.env.NODE_ENV !== 'production' && warn('It seems you are using two-way binding on ' + 'a v-for alias (' + this.expression + '), and the ' + 'v-for has filters. This will not work properly. ' + 'Either remove the filters or use an array of ' + 'objects and bind to object properties instead.', this.vm);
+      process.env.NODE_ENV !== 'production' && warn('It seems you are using two-way binding on ' + 'a krt-for alias (' + this.expression + '), and the ' + 'krt-for has filters. This will not work properly. ' + 'Either remove the filters or use an array of ' + 'objects and bind to object properties instead.', this.vm);
       return;
     }
     forContext._withLock(function () {
@@ -3312,8 +3312,8 @@ Watcher.prototype.teardown = function () {
   if (this.active) {
     // remove self from vm's watcher list
     // this is a somewhat expensive operation so we skip it
-    // if the vm is being destroyed or is performing a v-for
-    // re-render (the watcher list is then filtered by v-for).
+    // if the vm is being destroyed or is performing a krt-for
+    // re-render (the watcher list is then filtered by krt-for).
     if (!this.vm._isBeingDestroyed && !this.vm._vForRemoving) {
       this.vm._watchers.$remove(this);
     }
@@ -3616,7 +3616,7 @@ var html = {
       // hold nodes
       this.nodes = [];
       // replace the placeholder with proper anchor
-      this.anchor = createAnchor('v-html');
+      this.anchor = createAnchor('krt-html');
       replace(this.el, this.anchor);
     }
   },
@@ -3921,25 +3921,25 @@ var vFor = {
     }
 
     if (!this.alias) {
-      process.env.NODE_ENV !== 'production' && warn('Invalid v-for expression "' + this.descriptor.raw + '": ' + 'alias is required.', this.vm);
+      process.env.NODE_ENV !== 'production' && warn('Invalid krt-for expression "' + this.descriptor.raw + '": ' + 'alias is required.', this.vm);
       return;
     }
 
     // uid as a cache identifier
-    this.id = '__v-for__' + ++uid$3;
+    this.id = '__krt-for__' + ++uid$3;
 
     // check if this is an option list,
     // so that we know if we need to update the <select>'s
-    // v-model when the option list has changed.
-    // because v-model has a lower priority than v-for,
-    // the v-model is not bound here yet, so we have to
+    // krt-model when the option list has changed.
+    // because krt-model has a lower priority than krt-for,
+    // the krt-model is not bound here yet, so we have to
     // retrive it in the actual updateModel() function.
     var tag = this.el.tagName;
     this.isOption = (tag === 'OPTION' || tag === 'OPTGROUP') && this.el.parentNode.tagName === 'SELECT';
 
     // setup anchor nodes
-    this.start = createAnchor('v-for-start');
-    this.end = createAnchor('v-for-end');
+    this.start = createAnchor('krt-for-start');
+    this.end = createAnchor('krt-for-end');
     replace(this.el, this.end);
     before(this.start, this.end);
 
@@ -4126,7 +4126,7 @@ var vFor = {
   },
 
   /**
-   * Update the v-ref on owner vm.
+   * Update the krt-ref on owner vm.
    */
 
   updateRef: function updateRef() {
@@ -4146,7 +4146,7 @@ var vFor = {
   },
 
   /**
-   * For option lists, update the containing v-model on
+   * For option lists, update the containing krt-model on
    * parent <select>.
    */
 
@@ -4367,7 +4367,7 @@ var vFor = {
    *
    * It is necessary for this to be called during the
    * wathcer's dependency collection phase because we want
-   * the v-for to update when the source Object is mutated.
+   * the krt-for to update when the source Object is mutated.
    */
 
   _postProcess: function _postProcess(value) {
@@ -4419,7 +4419,7 @@ var vFor = {
  * should have been set to false so we can skip them.
  *
  * If this is a block repeat, we want to make sure we only
- * return frag that is bound to this v-for. (see #929)
+ * return frag that is bound to this krt-for. (see #929)
  *
  * @param {Fragment} frag
  * @param {Comment|Text} anchor
@@ -4477,7 +4477,7 @@ function range(n) {
 
 if (process.env.NODE_ENV !== 'production') {
   vFor.warnDuplicate = function (value) {
-    warn('Duplicate value found in v-for="' + this.descriptor.raw + '": ' + JSON.stringify(value) + '. Use track-by="$index" if ' + 'you are expecting duplicate values.', this.vm);
+    warn('Duplicate value found in krt-for="' + this.descriptor.raw + '": ' + JSON.stringify(value) + '. Use track-by="$index" if ' + 'you are expecting duplicate values.', this.vm);
   };
 }
 
@@ -4491,15 +4491,15 @@ var vIf = {
     if (!el.__vue__) {
       // check else block
       var next = el.nextElementSibling;
-      if (next && getAttr(next, 'v-else') !== null) {
+      if (next && getAttr(next, 'krt-else') !== null) {
         remove(next);
         this.elseEl = next;
       }
       // check main block
-      this.anchor = createAnchor('v-if');
+      this.anchor = createAnchor('krt-if');
       replace(el, this.anchor);
     } else {
-      process.env.NODE_ENV !== 'production' && warn('v-if="' + this.expression + '" cannot be ' + 'used on an instance root element.', this.vm);
+      process.env.NODE_ENV !== 'production' && warn('krt-if="' + this.expression + '" cannot be ' + 'used on an instance root element.', this.vm);
       this.invalid = true;
     }
   },
@@ -4557,7 +4557,7 @@ var show = {
   bind: function bind() {
     // check else block
     var next = this.el.nextElementSibling;
-    if (next && getAttr(next, 'v-else') !== null) {
+    if (next && getAttr(next, 'krt-else') !== null) {
       this.elseEl = next;
     }
   },
@@ -4663,6 +4663,7 @@ var text$2 = {
     // store that check result on itself. This also allows
     // easier test coverage control by unsetting the global
     // jQuery variable in tests.
+    var jQuery = null;
     this.hasjQuery = typeof jQuery === 'function';
     if (this.hasjQuery) {
       var method = jQuery.fn.on ? 'on' : 'bind';
@@ -4716,7 +4717,7 @@ var radio = {
     var el = this.el;
 
     this.getValue = function () {
-      // value overwrite via v-bind:value
+      // value overwrite via krt-bind:value
       if (el.hasOwnProperty('_value')) {
         return el._value;
       }
@@ -4932,7 +4933,7 @@ var model = {
     // friendly warning...
     this.checkFilters();
     if (this.hasRead && !this.hasWrite) {
-      process.env.NODE_ENV !== 'production' && warn('It seems you are using a read-only filter with ' + 'v-model="' + this.descriptor.raw + '". ' + 'You might want to use a two-way filter to ensure correct behavior.', this.vm);
+      process.env.NODE_ENV !== 'production' && warn('It seems you are using a read-only filter with ' + 'krt-model="' + this.descriptor.raw + '". ' + 'You might want to use a two-way filter to ensure correct behavior.', this.vm);
     }
     var el = this.el;
     var tag = el.tagName;
@@ -4944,7 +4945,7 @@ var model = {
     } else if (tag === 'TEXTAREA') {
       handler = handlers.text;
     } else {
-      process.env.NODE_ENV !== 'production' && warn('v-model does not support element type: ' + tag, this.vm);
+      process.env.NODE_ENV !== 'production' && warn('krt-model does not support element type: ' + tag, this.vm);
       return;
     }
     el.__v_model = this;
@@ -5053,14 +5054,14 @@ var on$1 = {
   },
 
   update: function update(handler) {
-    // stub a noop for v-on with no value,
+    // stub a noop for krt-on with no value,
     // e.g. @mousedown.prevent
     if (!this.descriptor.raw) {
       handler = function () {};
     }
 
     if (typeof handler !== 'function') {
-      process.env.NODE_ENV !== 'production' && warn('v-on:' + this.arg + '="' + this.expression + '" expects a function value, ' + 'got ' + handler, this.vm);
+      process.env.NODE_ENV !== 'production' && warn('krt-on:' + this.arg + '="' + this.expression + '" expects a function value, ' + 'got ' + handler, this.vm);
       return;
     }
 
@@ -5227,7 +5228,7 @@ var xlinkNS = 'http://www.w3.org/1999/xlink';
 var xlinkRE = /^xlink:/;
 
 // check for attributes that prohibit interpolations
-var disallowedInterpAttrRE = /^v-|^:|^@|^(?:is|transition|transition-mode|debounce|track-by|stagger|enter-stagger|leave-stagger)$/;
+var disallowedInterpAttrRE = /^krt-|^:|^@|^(?:is|transition|transition-mode|debounce|track-by|stagger|enter-stagger|leave-stagger)$/;
 // these attributes should also set their corresponding properties
 // because they only affect the initial state of the element
 var attrWithPropsRE = /^(?:value|checked|selected|muted)$/;
@@ -5236,7 +5237,7 @@ var attrWithPropsRE = /^(?:value|checked|selected|muted)$/;
 var enumeratedAttrRE = /^(?:draggable|contenteditable|spellcheck)$/;
 
 // these attributes should set a hidden property for
-// binding v-model to object values
+// binding krt-model to object values
 var modelProps = {
   value: '_value',
   'true-value': '_trueValue',
@@ -5275,12 +5276,12 @@ var bind$1 = {
         var raw = attr + '="' + descriptor.raw + '": ';
         // warn src
         if (attr === 'src') {
-          warn(raw + 'interpolation in "src" attribute will cause ' + 'a 404 request. Use v-bind:src instead.', this.vm);
+          warn(raw + 'interpolation in "src" attribute will cause ' + 'a 404 request. Use krt-bind:src instead.', this.vm);
         }
 
         // warn style
         if (attr === 'style') {
-          warn(raw + 'interpolation in "style" attribute will cause ' + 'the attribute to be discarded in Internet Explorer. ' + 'Use v-bind:style instead.', this.vm);
+          warn(raw + 'interpolation in "style" attribute will cause ' + 'the attribute to be discarded in Internet Explorer. ' + 'Use krt-bind:style instead.', this.vm);
         }
       }
     }
@@ -5298,7 +5299,7 @@ var bind$1 = {
     }
   },
 
-  // share object handler with v-bind:class
+  // share object handler with krt-bind:class
   handleObject: style.handleObject,
 
   handleSingle: function handleSingle(attr, value) {
@@ -5315,7 +5316,7 @@ var bind$1 = {
     var modelProp = modelProps[attr];
     if (!interp && modelProp) {
       el[modelProp] = value;
-      // update v-model if present
+      // update krt-model if present
       var model = el.__v_model;
       if (model) {
         model.listener();
@@ -5376,7 +5377,7 @@ var el = {
 
 var ref = {
   bind: function bind() {
-    process.env.NODE_ENV !== 'production' && warn('v-ref:' + this.arg + ' must be used on a child ' + 'component. Found on <' + this.el.tagName.toLowerCase() + '>.', this.vm);
+    process.env.NODE_ENV !== 'production' && warn('krt-ref:' + this.arg + ' must be used on a child ' + 'component. Found on <' + this.el.tagName.toLowerCase() + '>.', this.vm);
   }
 };
 
@@ -5384,7 +5385,7 @@ var cloak = {
   bind: function bind() {
     var el = this.el;
     this.vm.$once('pre-hook:compiled', function () {
-      el.removeAttribute('v-cloak');
+      el.removeAttribute('krt-cloak');
     });
   }
 };
@@ -5511,7 +5512,7 @@ var component = {
    * Setup. Two possible usages:
    *
    * - static:
-   *   <comp> or <div v-component="comp">
+   *   <comp> or <div krt-component="comp">
    *
    * - dynamic:
    *   <component :is="view">
@@ -5535,7 +5536,7 @@ var component = {
       this.pendingRemovals = 0;
       this.pendingRemovalCb = null;
       // create a ref anchor
-      this.anchor = createAnchor('v-component');
+      this.anchor = createAnchor('krt-component');
       replace(this.el, this.anchor);
       // remove is attribute.
       // this is removed during compilation, but because compilation is
@@ -5544,7 +5545,7 @@ var component = {
       this.el.removeAttribute('is');
       // remove ref, same as above
       if (this.descriptor.ref) {
-        this.el.removeAttribute('v-ref:' + hyphenate(this.descriptor.ref));
+        this.el.removeAttribute('krt-ref:' + hyphenate(this.descriptor.ref));
       }
       // if static, build right now.
       if (this.literal) {
@@ -5693,7 +5694,7 @@ var component = {
         // will be the common parent vm of this instance
         // and its host.
         _context: this.vm,
-        // if this is inside an inline v-for, the scope
+        // if this is inside an inline krt-for, the scope
         // will be the intermediate scope created for this
         // repeat fragment. this is used for linking props
         // and container directives.
@@ -5951,7 +5952,7 @@ function compileProps(el, propOptions, vm) {
     } else if (process.env.NODE_ENV !== 'production') {
       // check possible camelCase prop usage
       var lowerCaseName = path.toLowerCase();
-      value = /[A-Z\-]/.test(name) && (el.getAttribute(lowerCaseName) || el.getAttribute(':' + lowerCaseName) || el.getAttribute('v-bind:' + lowerCaseName) || el.getAttribute(':' + lowerCaseName + '.once') || el.getAttribute('v-bind:' + lowerCaseName + '.once') || el.getAttribute(':' + lowerCaseName + '.sync') || el.getAttribute('v-bind:' + lowerCaseName + '.sync'));
+      value = /[A-Z\-]/.test(name) && (el.getAttribute(lowerCaseName) || el.getAttribute(':' + lowerCaseName) || el.getAttribute('krt-bind:' + lowerCaseName) || el.getAttribute(':' + lowerCaseName + '.once') || el.getAttribute('krt-bind:' + lowerCaseName + '.once') || el.getAttribute(':' + lowerCaseName + '.sync') || el.getAttribute('krt-bind:' + lowerCaseName + '.sync'));
       if (value) {
         warn('Possible usage error for prop `' + lowerCaseName + '` - ' + 'did you mean `' + attr + '`? HTML is case-insensitive, remember to use ' + 'kebab-case for props in templates.', vm);
       } else if (options.required) {
@@ -6247,7 +6248,7 @@ var propDef = {
       twoWay: twoWay,
       filters: prop.filters,
       // important: props need to be observed on the
-      // v-for scope if present
+      // krt-for scope if present
       scope: this._scope
     });
 
@@ -6714,11 +6715,11 @@ var internalDirectives = {
 };
 
 // special binding prefixes
-var bindRE = /^v-bind:|^:/;
-var onRE = /^v-on:|^@/;
-var dirAttrRE = /^v-([^:]+)(?:$|:(.*)$)/;
+var bindRE = /^krt-bind:|^:/;
+var onRE = /^krt-on:|^@/;
+var dirAttrRE = /^krt-([^:]+)(?:$|:(.*)$)/;
 var modifierRE = /\.[^\.]+/g;
-var transitionRE = /^(v-bind:|:)?transition$/;
+var transitionRE = /^(krt-bind:|:)?transition$/;
 
 // default directive priority
 var DEFAULT_PRIORITY = 1000;
@@ -6755,7 +6756,7 @@ function compile(el, options, partial) {
    * @param {Vue} vm
    * @param {Element|DocumentFragment} el
    * @param {Vue} [host] - host vm of transcluded content
-   * @param {Object} [scope] - v-for scope
+   * @param {Object} [scope] - krt-for scope
    * @param {Fragment} [frag] - link context fragment
    * @return {Function|undefined}
    */
@@ -6918,7 +6919,7 @@ function compileRoot(el, options, contextOptions) {
     // warn container directives for fragment instances
     var names = containerAttrs.filter(function (attr) {
       // allow vue-loader/vueify scoped css attributes
-      return attr.name.indexOf('_v-') < 0 &&
+      return attr.name.indexOf('_krt-') < 0 &&
       // allow event listeners
       !onRE.test(attr.name) &&
       // allow slots
@@ -7080,7 +7081,7 @@ function processTextToken(token, options) {
     el = document.createTextNode(token.value);
   } else {
     if (token.html) {
-      el = document.createComment('v-html');
+      el = document.createComment('krt-html');
       setTokenType('html');
     } else {
       // IE will clean up empty textNodes during
@@ -7245,14 +7246,14 @@ function checkComponent(el, options) {
  */
 
 function checkTerminalDirectives(el, attrs, options) {
-  // skip v-pre
-  if (getAttr(el, 'v-pre') !== null) {
+  // skip krt-pre
+  if (getAttr(el, 'krt-pre') !== null) {
     return skip;
   }
-  // skip v-else block, but only if following v-if
-  if (el.hasAttribute('v-else')) {
+  // skip krt-else block, but only if following krt-if
+  if (el.hasAttribute('krt-else')) {
     var prev = el.previousElementSibling;
-    if (prev && prev.hasAttribute('v-if')) {
+    if (prev && prev.hasAttribute('krt-if')) {
       return skip;
     }
   }
@@ -7313,7 +7314,7 @@ function makeTerminalNodeLinkFn(el, dirName, value, options, def, rawName, arg, 
     modifiers: modifiers,
     def: def
   };
-  // check ref for v-for and router-view
+  // check ref for krt-for and router-view
   if (dirName === 'for' || dirName === 'router-view') {
     descriptor.ref = findRef(el);
   }
@@ -7355,12 +7356,12 @@ function compileDirectives(attrs, options) {
       value = tokensToExp(tokens);
       arg = name;
       pushDir('bind', directives.bind, tokens);
-      // warn against mixing mustaches with v-bind
+      // warn against mixing mustaches with krt-bind
       if (process.env.NODE_ENV !== 'production') {
         if (name === 'class' && Array.prototype.some.call(attrs, function (attr) {
-          return attr.name === ':class' || attr.name === 'v-bind:class';
+          return attr.name === ':class' || attr.name === 'krt-bind:class';
         })) {
-          warn('class="' + rawValue + '": Do not mix mustache interpolation ' + 'and v-bind for "class" on the same element. Use one or the other.', options);
+          warn('class="' + rawValue + '": Do not mix mustache interpolation ' + 'and krt-bind for "class" on the same element. Use one or the other.', options);
         }
       }
     } else
@@ -7393,7 +7394,7 @@ function compileDirectives(attrs, options) {
               dirName = matched[1];
               arg = matched[2];
 
-              // skip v-else (when used with v-show)
+              // skip krt-else (when used with krt-show)
               if (dirName === 'else') {
                 continue;
               }
@@ -7495,7 +7496,7 @@ var specialCharRE = /[^\w\-:\.]/;
  * instance option object. This allows us to transclude
  * a template node/fragment before the instance is created,
  * so the processed fragment can then be cloned and reused
- * in v-for.
+ * in krt-for.
  *
  * @param {Element} el
  * @param {Object} options
@@ -7529,8 +7530,8 @@ function transclude(el, options) {
     // anchors for fragment instance
     // passing in `persist: true` to avoid them being
     // discarded by IE during template cloning
-    prepend(createAnchor('v-start', true), el);
-    el.appendChild(createAnchor('v-end', true));
+    prepend(createAnchor('krt-start', true), el);
+    el.appendChild(createAnchor('krt-end', true));
   }
   return el;
 }
@@ -7568,9 +7569,9 @@ function transcludeTemplate(el, options) {
       // element directive
       resolveAsset(options, 'elementDirectives', tag) ||
       // for block
-      replacer.hasAttribute('v-for') ||
+      replacer.hasAttribute('krt-for') ||
       // if block
-      replacer.hasAttribute('v-if')) {
+      replacer.hasAttribute('krt-if')) {
         return frag;
       } else {
         options._replacerAttrs = extractAttrs(replacer);
@@ -7673,7 +7674,7 @@ function extractFragment(nodes, parent) {
   nodes = toArray(nodes);
   for (var i = 0, l = nodes.length; i < l; i++) {
     var node = nodes[i];
-    if (isTemplate(node) && !node.hasAttribute('v-if') && !node.hasAttribute('v-for')) {
+    if (isTemplate(node) && !node.hasAttribute('krt-if') && !node.hasAttribute('krt-for')) {
       parent.removeChild(node);
       node = parseTemplate(node);
     }
@@ -7740,7 +7741,7 @@ function stateMixin (Vue) {
     // make sure to convert string selectors into element now
     el = options.el = query(el);
     this._propsUnlinkFn = el && el.nodeType === 1 && props
-    // props must be linked in proper scope if inside v-for
+    // props must be linked in proper scope if inside krt-for
     ? compileAndLinkProps(this, el, props, this._scope) : null;
   };
 
@@ -7933,7 +7934,7 @@ function stateMixin (Vue) {
   };
 }
 
-var eventRE = /^v-on:|^@/;
+var eventRE = /^krt-on:|^@/;
 
 function eventsMixin (Vue) {
   /**
@@ -7952,7 +7953,7 @@ function eventsMixin (Vue) {
   };
 
   /**
-   * Register v-on events on a child component
+   * Register krt-on events on a child component
    *
    * @param {Vue} vm
    * @param {Element} el
@@ -7970,7 +7971,7 @@ function eventsMixin (Vue) {
           handler._fromParent = true;
           vm.$on(name.replace(eventRE), handler);
         } else if (process.env.NODE_ENV !== 'production') {
-          warn('v-on:' + name + '="' + attrs[i].value + '" ' + 'expects a function value, got ' + handler, vm);
+          warn('krt-on:' + name + '="' + attrs[i].value + '" ' + 'expects a function value, got ' + handler, vm);
         }
       }
     }
@@ -8123,7 +8124,7 @@ function noop() {}
  * @param {Vue} vm
  * @param {Node} el
  * @param {Vue} [host] - transclusion host component
- * @param {Object} [scope] - v-for scope
+ * @param {Object} [scope] - krt-for scope
  * @param {Fragment} [frag] - owner fragment
  * @constructor
  */
@@ -8165,7 +8166,8 @@ Directive.prototype._bind = function () {
 
   // remove attribute
   if ((name !== 'cloak' || this.vm._isCompiled) && this.el && this.el.removeAttribute) {
-    var attr = descriptor.attr || 'v-' + name;
+    var attr = descriptor.attr || 'krt-' + name;
+    console.log('directive', name, attr);
     this.el.removeAttribute(attr);
   }
 
@@ -8211,7 +8213,7 @@ Directive.prototype._bind = function () {
       postProcess: postProcess,
       scope: this._scope
     });
-    // v-model with inital inline value need to sync back to
+    // krt-model with inital inline value need to sync back to
     // model instead of update to DOM on init. They would
     // set the afterBind hook to indicate that.
     if (this.afterBind) {
@@ -8313,7 +8315,7 @@ Directive.prototype._checkStatement = function () {
 /**
  * Set the corresponding value with the setter.
  * This should only be used in two-way directives
- * e.g. v-model.
+ * e.g. krt-model.
  *
  * @param {*} value
  * @public
@@ -8397,7 +8399,7 @@ Directive.prototype._teardown = function () {
 
 function lifecycleMixin (Vue) {
   /**
-   * Update v-ref for component.
+   * Update krt-ref for component.
    *
    * @param {Boolean} remove
    */
@@ -8440,8 +8442,8 @@ function lifecycleMixin (Vue) {
     el = transclude(el, options);
     this._initElement(el);
 
-    // handle v-pre on root node (#2026)
-    if (el.nodeType === 1 && getAttr(el, 'v-pre') !== null) {
+    // handle krt-pre on root node (#2026)
+    if (el.nodeType === 1 && getAttr(el, 'krt-pre') !== null) {
       return;
     }
 
@@ -8518,7 +8520,7 @@ function lifecycleMixin (Vue) {
    * @param {Object} descriptor - parsed directive descriptor
    * @param {Node} node   - target node
    * @param {Vue} [host] - transclusion host component
-   * @param {Object} [scope] - v-for scope
+   * @param {Object} [scope] - krt-for scope
    * @param {Fragment} [frag] - owner fragment
    */
 
@@ -9400,11 +9402,11 @@ var slot = {
 
   compile: function compile(content, context, host) {
     if (content && context) {
-      if (this.el.hasChildNodes() && content.childNodes.length === 1 && content.childNodes[0].nodeType === 1 && content.childNodes[0].hasAttribute('v-if')) {
-        // if the inserted slot has v-if
-        // inject fallback content as the v-else
+      if (this.el.hasChildNodes() && content.childNodes.length === 1 && content.childNodes[0].nodeType === 1 && content.childNodes[0].hasAttribute('krt-if')) {
+        // if the inserted slot has krt-if
+        // inject fallback content as the krt-else
         var elseBlock = document.createElement('template');
-        elseBlock.setAttribute('v-else', '');
+        elseBlock.setAttribute('krt-else', '');
         elseBlock.innerHTML = this.el.innerHTML;
         // the else block should be compiled in child scope
         elseBlock._context = this.vm;
@@ -9448,7 +9450,7 @@ var partial = {
   },
 
   bind: function bind() {
-    this.anchor = createAnchor('v-partial');
+    this.anchor = createAnchor('krt-partial');
     replace(this.el, this.anchor);
     this.insert(this.params.name);
   },

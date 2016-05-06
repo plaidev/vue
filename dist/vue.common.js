@@ -8167,7 +8167,6 @@ Directive.prototype._bind = function () {
   // remove attribute
   if ((name !== 'cloak' || this.vm._isCompiled) && this.el && this.el.removeAttribute) {
     var attr = descriptor.attr || 'krt-' + name;
-    console.log('directive', name, attr);
     this.el.removeAttribute(attr);
   }
 

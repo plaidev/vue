@@ -84,7 +84,6 @@ Directive.prototype._bind = function () {
     this.el && this.el.removeAttribute
   ) {
     var attr = descriptor.attr || ('krt-' + name)
-    console.log('directive', name, attr)
     this.el.removeAttribute(attr)
   }
 

@@ -9,6 +9,13 @@
   <a href="https://www.npmjs.com/package/vue"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
 </p>
 
+## !!Caution!!
+
+Modification by plaid broke the default build system of native repo. You should modify manually after `npm run build`.
+Check this commit out https://github.com/plaidev/vue/commit/8138d989b9e983b80f01e964fec2561e0914b027.
+This modification is related to rollup.js and IE8.
+To follow up this issue, check the thread https://github.com/plaidev/karte-io/issues/7530
+
 ## Supporting Vue.js
 
 Vue.js is an MIT-licensed open source project. Its ongoing development is made possible thanks to the support by these awesome [backers](https://github.com/vuejs/vue/blob/dev/backers.md). If you'd like to join them, check out [Vue.js' Patreon campaign](https://www.patreon.com/evanyou).

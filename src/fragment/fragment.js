@@ -64,23 +64,12 @@ export default function Fragment (linker, vm, frag, host, scope, parentFrag) {
 
 Fragment.prototype.callHook = function (hook) {
   var i, l
-  for (i = 0, l = this.children.length; i < l; i++) {
-    hook(this.children[i])
-  }
   for (i = 0, l = this.childFrags.length; i < l; i++) {
     this.childFrags[i].callHook(hook)
   }
-}
-
-/**
- * Destroy the fragment.
- */
-
-Fragment.prototype.destroy = function () {
-  if (this.parentFrag) {
-    this.parentFrag.childFrags.$remove(this)
+  for (i = 0, l = this.children.length; i < l; i++) {
+    hook(this.children[i])
   }
-  this.unlink()
 }
 
 /**
@@ -109,7 +98,7 @@ function singleRemove () {
   this.inserted = false
   var shouldCallRemove = inDoc(this.node)
   var self = this
-  self.callHook(destroyChild)
+  this.beforeRemove()
   removeWithTransition(this.node, this.vm, function () {
     if (shouldCallRemove) {
       self.callHook(detach)
@@ -147,13 +136,53 @@ function multiRemove () {
   this.inserted = false
   var self = this
   var shouldCallRemove = inDoc(this.node)
-  self.callHook(destroyChild)
+  this.beforeRemove()
   removeNodeRange(this.node, this.end, this.vm, this.frag, function () {
     if (shouldCallRemove) {
       self.callHook(detach)
     }
     self.destroy()
   })
+}
+
+/**
+ * Prepare the fragment for removal.
+ */
+
+Fragment.prototype.beforeRemove = function () {
+  var i, l
+  for (i = 0, l = this.childFrags.length; i < l; i++) {
+    // call the same method recursively on child
+    // fragments, depth-first
+    this.childFrags[i].beforeRemove(false)
+  }
+  for (i = 0, l = this.children.length; i < l; i++) {
+   // Call destroy for all contained instances,
+   // with remove:false and defer:true.
+   // Defer is necessary because we need to
+   // keep the children to call detach hooks
+   // on them.
+    this.children[i].$destroy(false, true)
+  }
+  var dirs = this.unlink.dirs
+  for (i = 0, l = dirs.length; i < l; i++) {
+    // disable the watchers on all the directives
+    // so that the rendered content stays the same
+    // during removal.
+    dirs[i]._watcher && dirs[i]._watcher.teardown()
+  }
+}
+
+/**
+ * Destroy the fragment.
+ */
+
+Fragment.prototype.destroy = function () {
+  if (this.parentFrag) {
+    this.parentFrag.childFrags.$remove(this)
+  }
+  this.node.__vfrag__ = null
+  this.unlink()
 }
 
 /**
@@ -166,20 +195,6 @@ function attach (child) {
   if (!child._isAttached) {
     child._callHook('attached')
   }
-}
-
-/**
- * Call destroy for all contained instances,
- * with remove:false and defer:true.
- * Defer is necessary because we need to
- * keep the children to call detach hooks
- * on them.
- *
- * @param {Vue} child
- */
-
-function destroyChild (child) {
-  child.$destroy(false, true)
 }
 
 /**

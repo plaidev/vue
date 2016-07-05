@@ -1,5 +1,5 @@
 /*!
- * Vue.js v1.0.21
+ * Vue.js v2.0.0 (forked by Plaid,inc)
  * (c) 2016 Evan You
  * Released under the MIT License.
  */
@@ -9919,7 +9919,7 @@ function installGlobalAPI (Vue) {
 
 installGlobalAPI(Vue);
 
-Vue.version = '1.0.21';
+Vue.version = '2.0.0';
 
 // devtools global hook
 /* istanbul ignore next */

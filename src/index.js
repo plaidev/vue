@@ -5,7 +5,7 @@ import config from './config'
 
 installGlobalAPI(Vue)
 
-Vue.version = '1.0.21'
+Vue.version = '2.0.0'
 
 export default Vue
 

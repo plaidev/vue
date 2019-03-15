@@ -1,6 +1,6 @@
 /*!
- * Vue.js v1.0.21
- * (c) 2016 Evan You
+ * Vue.js v2.0.0
+ * (c) 2019 Evan You
  * Released under the MIT License.
  */
 (function (global, factory) {
@@ -1942,7 +1942,9 @@ var transition = Object.freeze({
    */
 
   Dep.prototype.depend = function () {
-    Dep.target.addDep(this);
+    if (Dep.target) {
+      Dep.target.addDep(this);
+    }
   };
 
   /**
@@ -9904,7 +9906,7 @@ var template = Object.freeze({
 
   installGlobalAPI(Vue);
 
-  Vue.version = '1.0.21';
+  Vue.version = '2.0.0';
 
   // devtools global hook
   /* istanbul ignore next */
